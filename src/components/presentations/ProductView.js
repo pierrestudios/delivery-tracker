@@ -9,7 +9,7 @@ export default props => {
     <Card className="p-1">
       <Grid.Row cards deck>
         <Grid.Col md={2}>
-          <img src={image} />
+          <img src={image} alt={name} />
         </Grid.Col>
         <Grid.Col md={7}>
           <strong>{name.trim()}</strong>
