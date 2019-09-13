@@ -4,12 +4,10 @@ import { Card } from "tabler-react";
 
 export default props => {
   return (
-    <div>
-      <Card>
-        <Card.Header>
-          <div>Rent Tools and Equipment</div>
-        </Card.Header>
-      </Card>
-    </div>
+    <Card>
+      <Card.Header>
+        <div>Rent Tools and Equipment</div>
+      </Card.Header>
+    </Card>
   );
 };
