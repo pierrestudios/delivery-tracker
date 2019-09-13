@@ -16,14 +16,14 @@ export default props => {
       <Nav.Item active to="/">
         Dashboard
       </Nav.Item>
-      <Nav.Item to="/profile">Find Tools</Nav.Item>
+      <Nav.Item to="/find-tools">Find Tools</Nav.Item>
       <Nav.Item to="/reservations">My Rentals</Nav.Item>
       <Nav.Item hasSubNav value="My Account" icon="user">
-        <Nav.SubItem>
+        <Nav.SubItem to="/profile">
           <Icon name="edit-3" />
           Update
         </Nav.SubItem>
-        <Dropdown.Item className="bg-danger text-white">
+        <Dropdown.Item to="/logout" className="bg-danger text-white">
           <Icon name="log-out" />
           <span className="">Log Out</span>
         </Dropdown.Item>
