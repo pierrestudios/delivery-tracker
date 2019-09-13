@@ -1,30 +1,35 @@
 import React from "react";
-import { Nav, Dropdown, Icon } from "tabler-react";
+import { Nav, Dropdown, Icon, AccountDropdown } from "tabler-react";
 
-const Logo = props => (
-  <>
-    <Icon name="globe" /> <span>Fanklin Tools</span>
-  </>
-);
+import NavItemLink from "./NavItemLink";
+import Logo from "./Logo";
 
-export default props => {
+export default ({ match }) => {
   return (
     <Nav>
       <Nav.Item>
         <Logo />
       </Nav.Item>
-      <Nav.Item active to="/">
-        Dashboard
-      </Nav.Item>
-      <Nav.Item to="/find-tools">Find Tools</Nav.Item>
-      <Nav.Item to="/reservations">My Rentals</Nav.Item>
-      <Nav.Item hasSubNav value="My Account" icon="user">
-        <Nav.SubItem to="/profile">
-          <Icon name="edit-3" />
-          Update
-        </Nav.SubItem>
+      <NavItemLink {...{ label: "Dashboard", to: "/" }} />
+      <NavItemLink {...{ label: "Find Tools", to: "/find-tools" }} />
+      <NavItemLink {...{ label: "My Rentals", to: "/reservations" }} />
+      <Nav.Item
+        active={match.url === "/profile"}
+        hasSubNav
+        value="My Account"
+        icon="user"
+      >
+        <NavItemLink
+          {...{
+            label: "Update",
+            to: "/profile",
+            isDropDown: true,
+            icon: () => <Icon name="edit-3" className="dropdown-icon" />
+          }}
+        />
+
         <Dropdown.Item to="/logout" className="bg-danger text-white">
-          <Icon name="log-out" />
+          <Icon name="log-out" className="dropdown-icon text-white" />
           <span className="">Log Out</span>
         </Dropdown.Item>
       </Nav.Item>

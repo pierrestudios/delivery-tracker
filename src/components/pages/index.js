@@ -10,6 +10,7 @@ export default props => {
       <Route
         exact
         key={"Home"}
+        path={"/"}
         render={routerProps => (
           <Home
             {...{
@@ -18,10 +19,10 @@ export default props => {
             }}
           />
         )}
-        path={"/"}
       />
       <Route
         key={"FindTools"}
+        path={"/find-tools"}
         render={routerProps => (
           <FindTools
             {...{
@@ -30,7 +31,6 @@ export default props => {
             }}
           />
         )}
-        path={"/find-tools"}
       />
     </React.Fragment>
   );

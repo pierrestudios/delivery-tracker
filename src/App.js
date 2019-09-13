@@ -20,7 +20,7 @@ export default App => {
 
                 return (
                   <React.Fragment>
-                    <Header />
+                    <Header {...props} />
                     <Pages id="app-content" />
                   </React.Fragment>
                 );
