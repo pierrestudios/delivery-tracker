@@ -6,7 +6,7 @@ export default props => {
   const { desc } = (details && details[0]) || {};
 
   return (
-    <Card className="p-1">
+    <Card className="p-3">
       <Grid.Row cards deck>
         <Grid.Col md={2}>
           <img src={image} alt={name} />
