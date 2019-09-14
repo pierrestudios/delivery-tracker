@@ -34,24 +34,31 @@ export default ({ product, category, location }) => {
         <span style={{ color: "#999", marginLeft: 5 }}>{categoryName}</span>
       </Card.Header>
       {selectedPriceOption && !reservation ? null : (
-        <Card.Body>
-          <img
-            src={uri}
-            style={{
-              minHeight: 200,
-              width: "100%",
-              flex: 1
-            }}
-          />
+        <>
+          <Card.Header>
+            <img
+              src={uri}
+              style={{
+                minHeight: 200,
+                maxWidth: 400,
+                width: "100%",
+                margin: "auto",
+                flex: 1
+              }}
+            />
+          </Card.Header>
+          <Card.Body>
+            {meta.map((m, i) => (
+              <span style={{ color: "#333", paddingRight: 5 }} key={i}>
+                {m}
+              </span>
+            ))}
 
-          {meta.map((m, i) => (
-            <span style={{ color: "#333" }} key={i}>
-              {m}
-            </span>
-          ))}
+            <br />
 
-          <span style={{ color: "#333" }}>{descText}</span>
-        </Card.Body>
+            <span style={{ color: "#333" }}>{descText}</span>
+          </Card.Body>
+        </>
       )}
     </Card>
   );

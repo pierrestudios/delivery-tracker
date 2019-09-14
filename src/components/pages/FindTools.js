@@ -35,7 +35,7 @@ export default props => {
     return <div />;
   }
 
-  console.log({ selectedProduct, selectedCategory, selectedLocation });
+  // console.log({ selectedProduct, selectedCategory, selectedLocation });
 
   return (
     <Page>
@@ -66,8 +66,7 @@ export default props => {
             handleChange={selectLocation}
             data={locations.map(l => ({ ...l, key: l.id }))}
           />
-        </Card.Body>
-        <Card.Body>
+
           <SelectPicker
             selectLabel="Category"
             selectedValue={selectedCategory}
@@ -75,8 +74,7 @@ export default props => {
             data={categories.map(l => ({ ...l, key: l.id }))}
             display={!!selectedLocation}
           />
-        </Card.Body>
-        <Card.Body>
+
           {!!selectedCategory ? (
             <ProductsList
               location={selectedLocation}

@@ -12,6 +12,7 @@ export default ({
     <div
       style={{
         flex: 1,
+        marginBottom: 10,
         display: display ? "block" : "none"
       }}
     >
