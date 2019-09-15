@@ -51,3 +51,30 @@ export const reservationBadgeConfig = {
   delivered: { color: "#0960ff", label: "Delivered" },
   canceled: { color: "#ccc", label: "Canceled" }
 };
+export const generateTimeOptions = (step = 30, startTitme = "8:00") => {
+  function addStepToTime(step, time) {
+    const [hour, min] = time.split(":").map(t => parseInt(t));
+    if (min + step >= minutesInHour) {
+      return [hour + 1, "00"].join(":");
+    }
+    return [hour, min + step].join(":");
+  }
+  const timeOptions = [];
+  const minutesInHour = 60;
+  const hoursInADay = 12;
+  const length = (minutesInHour / step) * hoursInADay;
+  let entry = startTitme;
+  for (let t = 0; t < length; t++) {
+    entry = t === 0 ? entry : addStepToTime(step, entry);
+    const entryDateTime = new Date();
+    const [entryHours, entryMinutes] = entry.split(":");
+    entryDateTime.setHours(entryHours);
+    entryDateTime.setMinutes(entryMinutes);
+    timeOptions.push(formatTime(entryDateTime));
+  }
+
+  return timeOptions.map(t => ({
+    label: t,
+    value: t
+  }));
+};

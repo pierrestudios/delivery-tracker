@@ -4,6 +4,8 @@ import App from "./App";
 import Store from "./store";
 import * as serviceWorker from "./serviceWorker";
 
+import "./styles/main.css";
+
 ReactDOM.render(
   <Store>
     <App />

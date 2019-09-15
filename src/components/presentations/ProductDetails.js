@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card } from "tabler-react";
 
 import PricingTable from "./PricingTable";
+import ReserveForm from "./ReserveForm";
+
+import { addReservation, saveCurrentReservation } from "../../store/actions";
 
 export default ({ product, category, location }) => {
   const { image: uri, name: title, details } = product;
@@ -19,9 +22,22 @@ export default ({ product, category, location }) => {
   }
 
   const dispatch = useDispatch();
-  const updateCurrentReservation = data => {};
-  const resetCurrentReservation = () => {};
-  const submitReservation = data => {};
+  const updateCurrentReservation = data => {
+    dispatch(saveCurrentReservation(data));
+  };
+  const resetCurrentReservation = () => {
+    dispatch(
+      saveCurrentReservation({
+        deliverySource: (location && location.address) || "",
+        productId: product.id,
+        selectedPriceOption: undefined,
+        selectedDuration: undefined
+      })
+    );
+  };
+  const submitReservation = data => {
+    dispatch(addReservation(data));
+  };
   const reservation = reservations.find(r => r.productId === product.id);
   const descText = desc && desc.replace(/,/gi, "");
 
@@ -73,6 +89,17 @@ export default ({ product, category, location }) => {
           reservation={reservation}
           selectedDuration={selectedDuration}
         />
+
+        {reservation ? null : (
+          <ReserveForm
+            currentReservation={currentReservation}
+            submitReservation={submitReservation}
+            updateCurrentReservation={updateCurrentReservation}
+            updateDuration={value => {
+              updateCurrentReservation({ selectedDuration: value });
+            }}
+          />
+        )}
       </Card.Body>
     </Card>
   );
