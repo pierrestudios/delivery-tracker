@@ -16,7 +16,7 @@ export default ({ show, title, bodyContent, actions = [], handleClose }) => {
         >
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">{title}</h5>
+              <h4 className="modal-title">{title}</h4>
               <Button
                 className="close"
                 data-dismiss="modal"

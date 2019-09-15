@@ -42,7 +42,7 @@ export default props => {
       <Modal
         {...{
           show: !!selectedProduct,
-          title: selectedProduct && selectedProduct.name,
+          title: "Tools Details",
           bodyContent: selectedProduct ? (
             <ProductDetails
               product={selectedProduct}

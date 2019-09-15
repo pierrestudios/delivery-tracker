@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card } from "tabler-react";
 
+import PricingTable from "./PricingTable";
+
 export default ({ product, category, location }) => {
   const { image: uri, name: title, details } = product;
   const { name: categoryName } = category;
@@ -49,17 +51,29 @@ export default ({ product, category, location }) => {
           </Card.Header>
           <Card.Body>
             {meta.map((m, i) => (
-              <span style={{ color: "#333", paddingRight: 5 }} key={i}>
+              <strong style={{ color: "#333", paddingRight: 5 }} key={i}>
                 {m}
-              </span>
+              </strong>
             ))}
 
-            <br />
-
-            <span style={{ color: "#333" }}>{descText}</span>
+            <div style={{ color: "#333" }}>{descText}</div>
           </Card.Body>
         </>
       )}
+      <Card.Body>
+        <PricingTable
+          data={pricingTable}
+          selectedPriceOption={selectedPriceOption}
+          selectPriceOption={selectedPriceOption =>
+            updateCurrentReservation({
+              selectedPriceOption,
+              selectedDuration: selectedPriceOption.heading
+            })
+          }
+          reservation={reservation}
+          selectedDuration={selectedDuration}
+        />
+      </Card.Body>
     </Card>
   );
 };
