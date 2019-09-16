@@ -1,3 +1,7 @@
+.header-nav li:last-child {
+  margin-left: auto;
+  margin-right: 40px;
+}
 .w-200px {
   width: 200px !important;
 }

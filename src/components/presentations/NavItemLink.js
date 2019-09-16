@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-export default ({ label, to, icon, isDropDown = false }) => {
+export default ({ label, to, icon, isDropDown = false, ...props }) => {
   return isDropDown ? (
-    <NavLink exact className={"dropdown-item"} to={to}>
+    <NavLink exact className={"dropdown-item"} activeClassName="na" to={to}>
       {icon ? icon() : null}
       {label}
     </NavLink>

@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { Nav, Dropdown, Icon, AccountDropdown } from "tabler-react";
 
 import NavItemLink from "./NavItemLink";
@@ -6,11 +7,12 @@ import Logo from "./Logo";
 
 export default ({ match }) => {
   return (
-    <Nav>
+    <Nav className="header-nav">
       <Nav.Item>
-        <Logo />
+        <NavLink exact className={"nav-link"} to={"/"}>
+          <Logo />
+        </NavLink>
       </Nav.Item>
-      <NavItemLink {...{ label: "Dashboard", to: "/" }} />
       <NavItemLink {...{ label: "Find Tools", to: "/find-tools" }} />
       <NavItemLink {...{ label: "My Rentals", to: "/reservations" }} />
       <Nav.Item
