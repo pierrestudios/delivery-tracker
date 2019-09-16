@@ -53,7 +53,7 @@ export default ({ product, category, location }) => {
       </Card.Header>
       {selectedPriceOption && !reservation ? null : (
         <>
-          <Card.Header>
+          <Card.Body>
             <img
               src={uri}
               style={{
@@ -64,14 +64,13 @@ export default ({ product, category, location }) => {
                 flex: 1
               }}
             />
-          </Card.Header>
+          </Card.Body>
           <Card.Body>
             {meta.map((m, i) => (
               <strong style={{ color: "#333", paddingRight: 5 }} key={i}>
                 {m}
               </strong>
             ))}
-
             <div style={{ color: "#333" }}>{descText}</div>
           </Card.Body>
         </>

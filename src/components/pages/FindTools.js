@@ -51,7 +51,6 @@ export default props => {
             />
           ) : null,
           handleClose: () => selectProduct(null)
-          // actions: []
         }}
       />
 
