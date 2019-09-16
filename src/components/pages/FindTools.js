@@ -64,14 +64,14 @@ export default props => {
             selectLabel="Location"
             selectedValue={selectedLocation}
             handleChange={selectLocation}
-            data={locations.map(l => ({ ...l, key: l.id }))}
+            data={locations}
           />
 
           <SelectPicker
             selectLabel="Category"
             selectedValue={selectedCategory}
             handleChange={selectCategory}
-            data={categories.map(l => ({ ...l, key: l.id }))}
+            data={categories}
             display={!!selectedLocation}
           />
 

@@ -48,8 +48,10 @@ export default ({
             }}
           >
             <option value="">{`Select ${selectLabel}`}</option>
-            {data.map(({ name, key }) => (
-              <option label={name} value={key} key={key} />
+            {data.map(({ name, id }) => (
+              <option value={id} key={id}>
+                {name}
+              </option>
             ))}
           </Form.Select>
         </List.GroupItem>
