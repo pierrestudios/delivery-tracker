@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Nav, Dropdown, Icon, AccountDropdown } from "tabler-react";
+import { Nav, Icon } from "tabler-react";
 
 import NavItemLink from "./NavItemLink";
 import Logo from "./Logo";
@@ -26,14 +26,18 @@ export default ({ match }) => {
             label: "Update",
             to: "/profile",
             isDropDown: true,
-            icon: () => <Icon name="edit-3" className="dropdown-icon" />
+            icon: <Icon name="edit-3" className="dropdown-icon" />
           }}
         />
-
-        <Dropdown.Item to="/logout" className="bg-danger text-white">
-          <Icon name="log-out" className="dropdown-icon text-white" />
-          <span className="">Log Out</span>
-        </Dropdown.Item>
+        <NavItemLink
+          {...{
+            label: "Log Out",
+            to: "/logout",
+            isDropDown: true,
+            linkClassNames: "bg-danger text-white",
+            icon: <Icon name="log-out" className="dropdown-icon text-white" />
+          }}
+        />
       </Nav.Item>
     </Nav>
   );
