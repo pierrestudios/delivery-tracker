@@ -39,7 +39,7 @@ export default ({ product, category, location }) => {
     dispatch(addReservation(data));
   };
   const reservation = reservations.find(r => r.productId === product.id);
-  const descText = desc && desc.replace(/,/gi, "");
+  const descText = desc && desc.replace(/,/gi, " • ");
 
   useEffect(() => {
     resetCurrentReservation();
