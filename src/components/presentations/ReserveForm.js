@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { Icon, Form, Button } from "tabler-react";
+import PlacesAutocomplete from "react-places-autocomplete";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -63,8 +64,6 @@ export default ({
     return <div />;
   }
 
-  // console.log({ generateTimeOptions: generateTimeOptions() });
-
   const { heading, price: reservationPrice } = selectedPriceOption;
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
@@ -121,12 +120,36 @@ export default ({
     );
     switch (type) {
       case "addressAutoComplete":
-        return null;
-      /*
-          <AddressAutoComplete
-            {...{ error, value, placeholder: label, onAddressSelect: update }}
-          />
-          */
+        return (
+          <PlacesAutocomplete
+            value={value || ""}
+            onChange={entry => {
+              update({ target: { value: entry } });
+            }}
+          >
+            {({ getInputProps, getSuggestionItemProps, suggestions }) => (
+              <div className="autocomplete-root">
+                <input
+                  className="form-control min-w-200px "
+                  placeholder={label}
+                  {...getInputProps()}
+                />
+                <div className="autocomplete-dropdown-container">
+                  <ul className="list-group">
+                    {suggestions.map(suggestion => (
+                      <li
+                        className="list-group-item pointer"
+                        {...getSuggestionItemProps(suggestion)}
+                      >
+                        <span>{suggestion.description}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+          </PlacesAutocomplete>
+        );
 
       case "date":
         return getDateTimeField({
@@ -186,21 +209,22 @@ export default ({
     handleChange,
     sixMoFromToday,
     placeHolderText
+    // formatChosenDate
   }) => {
     return mode === "date" ? (
       <DatePicker
-        className="form-control w-200p"
+        className="form-control min-w-200px"
         wrapperClassName="react-datepicker-wrapper d-table mb-3"
         minDate={today}
         maxDate={sixMoFromToday}
         placeholderText={placeHolderText}
-        selected={value || today}
+        selected={value || ""}
         onChange={handleChange}
       />
     ) : (
       <div className="d-table mb-3">
         <Form.Select
-          className="w-200p"
+          className="min-w-200px"
           defaultValue={value}
           onChange={e => {
             handleChange(e.target.value);
@@ -239,7 +263,7 @@ export default ({
           className="mr-2"
         >
           <Form.Input
-            className="w-200p"
+            className="min-w-200px"
             readOnly
             name={name}
             value={value}
@@ -317,7 +341,7 @@ export default ({
     if (hasErrors(errors)) {
       setErrorFields(errors);
 
-      // console.log({ errors });
+      console.log({ errors });
 
       return;
     }
@@ -325,7 +349,7 @@ export default ({
     submitReservation({
       date: formatDate(new Date()),
       deliveryDate: formatDate(deliveryDate),
-      deliveryTime: formatTime(deliveryTime),
+      deliveryTime,
       duration: selectedDuration,
       deliveryAddress,
       deliverySource,

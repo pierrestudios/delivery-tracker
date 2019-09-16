@@ -1,3 +1,9 @@
-.w-200p {
+.w-200px {
   width: 200px !important;
+}
+.min-w-200px {
+  min-width: 200px !important;
+}
+.pointer {
+  cursor: pointer;
 }

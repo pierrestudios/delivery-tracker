@@ -5,12 +5,7 @@ import {
   CURRENT_RESERVATION
 } from "./types";
 import { loadProducts } from "./staticData";
-
-function retrieveFromDB() {
-  return [];
-}
-
-function saveToDB() {}
+import { retrieve as retrieveFromDB, save as saveToDB } from "./apiActions";
 
 function hydrate(data, product) {
   const [durationCount, durationType] = data.duration.split(" ");
@@ -62,6 +57,8 @@ export function addReservation(data) {
     const product = products.find(p => p.id === data.productId);
     const reservation = hydrate(savedReservation, product);
 
+    console.log({ reservation, savedReservation });
+
     dispatch({
       type: ADD_RESERVATION,
       payload: reservation
@@ -72,6 +69,7 @@ export function addReservation(data) {
 export function saveCurrentReservation(data) {
   return async (dispatch, getState) => {
     const { currentReservation } = getState();
+    // console.log({ currentReservation, data });
     dispatch({
       type: CURRENT_RESERVATION,
       payload: { ...currentReservation, ...data }
