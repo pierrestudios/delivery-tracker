@@ -13,7 +13,7 @@ import {
   loadLocations,
   loadProducts
 } from "../../store/actions";
-import ProductDetails from "../presentations/ProductDetails";
+import ProductDetails from "../containers/ProductDetails";
 
 export default props => {
   const { categories, locations, products } = useSelector(state => state);

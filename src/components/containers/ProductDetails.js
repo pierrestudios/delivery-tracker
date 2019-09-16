@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card } from "tabler-react";
 
-import PricingTable from "./PricingTable";
-import ReserveForm from "./ReserveForm";
+import PricingTable from "../presentations/PricingTable";
+import ReserveForm from "../presentations/ReserveForm";
 
 import { addReservation, saveCurrentReservation } from "../../store/actions";
 
