@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Icon, Form, Button } from "tabler-react";
+import { Link } from "react-router-dom";
 
 import { apiLogin, loadUserData } from "../../store/actions";
 import Logo from "../presentations/Logo";
-
-const Loading = () => {
-  return <div>Loading...</div>;
-};
+import Loading from "../presentations/Loading";
+import LogoHeader from "../presentations/LogoHeader";
 
 export default props => {
   const dispatch = useDispatch();
   const { userAuth } = useSelector(state => state);
   const { token: userToken, loginError, loaded: authLoaded = false } = userAuth;
-  const [loginData, saveLoginData] = useState({ ...userAuth, started: true });
+  const [loginData, saveLoginData] = useState({ ...userAuth, started: false });
   const { email, password, error } = loginData;
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export default props => {
   }
 
   function startAppWithAuth() {
-    // Note: use "setTimeout" to avoid error: "can't perform a react state update on an unmounted component"
+    // TODO: Redirect to "/"
     setTimeout(() => false, 100);
   }
 
@@ -51,9 +50,7 @@ export default props => {
 
   return loginData && loginData.started ? (
     <div id="login-page">
-      <div className="m-3 h-7 m-7 text-center">
-        <Logo />
-      </div>
+      <LogoHeader />
 
       <Card className="max-w-500 m-auto">
         <Card.Body header style={{ alignContent: "center" }}>
@@ -162,24 +159,12 @@ export default props => {
         </Card.Body>
 
         <Card.Body className="justify-content-center">
-          <Button
-            color="info"
-            className="mt-3"
-            onClick={
-              () => false // navigation.navigate("PasswordRetrieve")
-            }
-          >
+          <Link className="btn btn-info mt-3" to="/retrieve-password">
             <span>Retrieve password</span>
-          </Button>
-          <Button
-            color="info"
-            className="mt-3 float-right"
-            onClick={
-              () => false // navigation.navigate("Signup")
-            }
-          >
+          </Link>
+          <Link className="btn btn-info mt-3 float-right" to="/signup">
             <span>Create Account</span>
-          </Button>
+          </Link>
         </Card.Body>
       </Card>
     </div>
