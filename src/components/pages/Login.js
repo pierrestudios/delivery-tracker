@@ -89,6 +89,7 @@ export default props => {
                 name="email"
                 placeholder="Email"
                 defaultValue={email}
+                value={email}
                 onChange={e => {
                   saveLoginData({
                     ...loginData,
@@ -123,6 +124,7 @@ export default props => {
                 type="password"
                 placeholder="Password"
                 defaultValue={password}
+                value={password}
                 onChange={e => {
                   saveLoginData({
                     ...loginData,
@@ -139,6 +141,19 @@ export default props => {
                   },
                   { ...(error ? { color: "red" } : null) }
                 ]}
+              />
+            </div>
+            <div
+              style={{
+                paddingTop: 10,
+                paddingBottom: 7
+              }}
+            >
+              <Form.Switch
+                onChange={() => false}
+                value="1"
+                checked={true}
+                label="Save Login"
               />
             </div>
 
