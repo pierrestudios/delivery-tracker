@@ -1,27 +1,55 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+import Login from "./components/pages/Login";
 import Pages from "./components/pages";
 import Header from "./components/presentations/Header";
 
 export default () => {
-  const { loggedIn = true } = {}; // FakeLogin for now
+  const { userAuth } = useSelector(state => state);
+  const { token: loggedIn } = userAuth;
+
   return (
     <main id="app-container" className="container">
       <div id="wrapper">
         <BrowserRouter>
           <Switch>
             <Route
+              exact
+              key={"Login"}
+              path={"/login"}
+              render={routerProps => {
+                if (loggedIn) {
+                  return <Redirect to={"/"} />;
+                }
+
+                return <Login {...routerProps} />;
+              }}
+            />
+            <Route
+              exact
+              key={"Login"}
+              path={"/signup"}
+              render={routerProps => {
+                if (loggedIn) {
+                  return <Redirect to={"/"} />;
+                }
+
+                return <Login {...routerProps} />;
+              }}
+            />
+            <Route
               path="*"
-              render={props => {
-                if (!loggedIn) {
+              render={routerProps => {
+                if (!loggedIn && routerProps.match.url !== "/login") {
                   return <Redirect to={"/login"} />;
                 }
 
                 return (
                   <React.Fragment>
-                    <Header {...props} />
-                    <Pages id="app-content" />
+                    <Header {...routerProps} />
+                    <Pages id="app-content" {...routerProps} />
                   </React.Fragment>
                 );
               }}

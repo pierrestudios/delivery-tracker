@@ -4,3 +4,10 @@ export {
   addReservation,
   saveCurrentReservation
 } from "./reservations";
+export {
+  apiSignup,
+  apiLogin,
+  apiRetrievePassword,
+  loadUserData,
+  saveUserData
+} from "./userAuth";

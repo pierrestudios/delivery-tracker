@@ -14,3 +14,6 @@
 .error-input {
   border-color: red;
 }
+.max-w-500 {
+  max-width: 500px;
+}
