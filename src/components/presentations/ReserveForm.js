@@ -130,7 +130,9 @@ export default ({
             {({ getInputProps, getSuggestionItemProps, suggestions }) => (
               <div className="autocomplete-root">
                 <input
-                  className="form-control min-w-200px "
+                  className={`form-control min-w-200px ${
+                    error ? "error-input" : ""
+                  }`}
                   placeholder={label}
                   {...getInputProps()}
                 />
@@ -196,6 +198,7 @@ export default ({
             value={value}
             type={type}
             onChange={update}
+            className={`${error ? "error-input" : ""}`}
             {...addlProps}
           />
         );
@@ -213,7 +216,7 @@ export default ({
   }) => {
     return mode === "date" ? (
       <DatePicker
-        className="form-control min-w-200px"
+        className={`form-control min-w-200px ${error ? "error-input" : ""}`}
         wrapperClassName="react-datepicker-wrapper d-table mb-3"
         minDate={today}
         maxDate={sixMoFromToday}
@@ -224,7 +227,7 @@ export default ({
     ) : (
       <div className="d-table mb-3">
         <Form.Select
-          className="min-w-200px"
+          className={`min-w-200px ${error ? "error-input" : ""}`}
           defaultValue={value}
           onChange={e => {
             handleChange(e.target.value);
@@ -341,8 +344,6 @@ export default ({
     if (hasErrors(errors)) {
       setErrorFields(errors);
 
-      console.log({ errors });
-
       return;
     }
 
@@ -365,11 +366,7 @@ export default ({
   }, [selectedPriceOption]);
 
   return (
-    <div
-      style={{
-        width: "100%"
-      }}
-    >
+    <div id="reserve-form" className="w-100 border-top mt-5 pt-5">
       {renderField({
         label: "Duration",
         value: selectedDuration,
@@ -423,7 +420,7 @@ export default ({
         onClick={saveReservation}
         className="mt-4 d-block"
       >
-        <span style={{ fontWeight: "800", fontSize: 14 }}>
+        <span className="font-weight-bold" style={{ fontSize: 14 }}>
           Submit Reservation
         </span>
       </Button>
