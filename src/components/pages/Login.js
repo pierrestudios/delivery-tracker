@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Icon, Form, Button } from "tabler-react";
+import { Card, Form, Button } from "tabler-react";
 import { Link } from "react-router-dom";
 
 import { apiLogin, loadUserData } from "../../store/actions";
-import Logo from "../presentations/Logo";
 import Loading from "../presentations/Loading";
 import LogoHeader from "../presentations/LogoHeader";
 
-export default props => {
+export default () => {
   const dispatch = useDispatch();
   const { userAuth } = useSelector(state => state);
   const { token: userToken, loginError, loaded: authLoaded = false } = userAuth;
@@ -64,17 +63,7 @@ export default props => {
           </div>
 
           <Form>
-            {error ? (
-              <span
-                style={{
-                  marginBottom: 10,
-                  color: "red"
-                }}
-              >
-                {error}
-              </span>
-            ) : null}
-
+            {error ? <span className="text-danger">{error}</span> : null}
             <div className="mt-4 mb-4">
               <Form.Label>Enter your Email</Form.Label>
               <Form.Input

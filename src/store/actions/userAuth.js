@@ -182,7 +182,7 @@ export function apiRetrievePassword({ email }) {
     const userAuthData = {
       ...{ email, loaded: true },
       passwordRetrievedMessage:
-        "Password retrieve successfull. A meessage has been sent to your email"
+        "Password retrieve successful. A meessage has been sent to your email"
     };
 
     dispatch({

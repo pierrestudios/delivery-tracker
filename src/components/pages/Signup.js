@@ -93,14 +93,7 @@ export default () => {
 
           <Form>
             {signupError ? (
-              <span
-                style={{
-                  marginBottom: 10,
-                  color: "red"
-                }}
-              >
-                {signupError}
-              </span>
+              <span className="text-danger">{signupError}</span>
             ) : null}
 
             <div className="mt-4 mb-4">

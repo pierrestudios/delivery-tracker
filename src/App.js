@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
+import PasswordRetrieve from "./components/pages/PasswordRetrieve";
 import Pages from "./components/pages";
 import Header from "./components/presentations/Header";
 
@@ -43,7 +44,7 @@ export default () => {
                   return <Redirect to={"/"} />;
                 }
 
-                return <Login {...routerProps} />;
+                return <PasswordRetrieve {...routerProps} />;
               }}
             />
             <Route
