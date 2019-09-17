@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Login from "./components/pages/Login";
+import Signup from "./components/pages/Signup";
 import Pages from "./components/pages";
 import Header from "./components/presentations/Header";
 
@@ -16,8 +17,6 @@ export default () => {
         <BrowserRouter>
           <Switch>
             <Route
-              exact
-              key={"Login"}
               path={"/login"}
               render={routerProps => {
                 if (loggedIn) {
@@ -28,9 +27,17 @@ export default () => {
               }}
             />
             <Route
-              exact
-              key={"Login"}
               path={"/signup"}
+              render={routerProps => {
+                if (loggedIn) {
+                  return <Redirect to={"/"} />;
+                }
+
+                return <Signup {...routerProps} />;
+              }}
+            />
+            <Route
+              path={"/retrieve-password"}
               render={routerProps => {
                 if (loggedIn) {
                   return <Redirect to={"/"} />;

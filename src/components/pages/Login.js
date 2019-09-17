@@ -22,7 +22,7 @@ export default props => {
         ...userAuth,
         ...loginData,
         error: loginError,
-        started: authLoaded
+        started: true
       });
     } else if (authLoaded && !userToken) {
       saveLoginData({ ...userAuth, ...loginData, started: true });
@@ -75,20 +75,13 @@ export default props => {
               </span>
             ) : null}
 
-            <div
-              style={{
-                borderWidth: 1,
-                paddingTop: 10,
-                paddingBottom: 7,
-                ...props.style,
-                ...(error ? { borderColor: "red", borderWidth: 1 } : null)
-              }}
-            >
+            <div className="mt-4 mb-4">
               <Form.Label>Enter your Email</Form.Label>
               <Form.Input
                 name="email"
+                icon="mail"
+                position="append"
                 placeholder="Email"
-                defaultValue={email}
                 value={email}
                 onChange={e => {
                   saveLoginData({
@@ -98,32 +91,15 @@ export default props => {
                   });
                 }}
               />
-              <Icon
-                name="md-person"
-                style={[
-                  {
-                    color: "#999"
-                  },
-                  { ...(error ? { color: "red" } : null) }
-                ]}
-              />
             </div>
-            <div
-              style={{
-                borderWidth: 1,
-                paddingTop: 10,
-                paddingBottom: 7,
-
-                ...props.style,
-                ...(error ? { borderColor: "red", borderWidth: 1 } : null)
-              }}
-            >
+            <div className="mt-4 mb-4">
               <Form.Label>Enter your Password</Form.Label>
               <Form.Input
                 name="password"
                 type="password"
+                icon="lock"
+                position="append"
                 placeholder="Password"
-                defaultValue={password}
                 value={password}
                 onChange={e => {
                   saveLoginData({
@@ -133,22 +109,8 @@ export default props => {
                   });
                 }}
               />
-              <Icon
-                name="ios-key"
-                style={[
-                  {
-                    color: "#999"
-                  },
-                  { ...(error ? { color: "red" } : null) }
-                ]}
-              />
             </div>
-            <div
-              style={{
-                paddingTop: 10,
-                paddingBottom: 7
-              }}
-            >
+            <div className="mt-4 mb-4">
               <Form.Switch
                 onChange={() => false}
                 value="1"
