@@ -48,7 +48,7 @@ export default () => {
   }
 
   return loginData && loginData.started ? (
-    <div id="login-page">
+    <div id="login-page" className="page-height">
       <LogoHeader />
 
       <Card className="max-w-500 m-auto">

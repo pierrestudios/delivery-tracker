@@ -52,7 +52,7 @@ export default () => {
   }
 
   return userData && userData.started ? (
-    <div id="profile-page">
+    <div id="profile-page" className="page-height">
       <Card className="max-w-500 m-auto">
         <Card.Body header style={{ alignContent: "center" }}>
           <div

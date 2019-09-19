@@ -38,7 +38,7 @@ export default props => {
   // console.log({ selectedProduct, selectedCategory, selectedLocation });
 
   return (
-    <Page className="container">
+    <Page className="container page-height">
       <Modal
         {...{
           show: !!selectedProduct,

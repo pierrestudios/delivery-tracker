@@ -3,6 +3,10 @@
 
 .page {
   background: #fff;
+  display: block;
+}
+.page-height {
+  min-height: 800px;
 }
 .header-nav li:last-child {
   margin-left: auto;
@@ -22,4 +26,7 @@
 }
 .max-w-500 {
   max-width: 500px;
+}
+.footer {
+  margin-top: 25px;
 }
