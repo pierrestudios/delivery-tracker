@@ -12,7 +12,7 @@ const apiRequest = async (url, data, type = "GET", headerData = undefined) => {
       body: data ? JSON.stringify(data) : undefined // Fix for Edge "TypeMismatchError"
     })
       .then(async res => {
-        console.log("res", { res });
+        // console.log("res", { res });
         if (!res.ok) {
           return Promise.reject(res.statusText || "Code: " + res.status);
         }
