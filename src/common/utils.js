@@ -78,3 +78,44 @@ export const generateTimeOptions = (step = 30, startTitme = "8:00") => {
     value: t
   }));
 };
+
+export const formatPhone = numberString => {
+  const digits = numberString.replace(/\D/g, "");
+  const totalNumber = 10;
+
+  if (digits.length < totalNumber) {
+    return digits;
+  }
+
+  const formattedNumberString =
+    digits.length > totalNumber ? digits.slice(0, totalNumber) : digits;
+
+  // const numberString2 = numberString.replace(/\D/g, "");
+  const segmentedNumberString = formattedNumberString.match(
+    /^(\d{3})(\d{3})(\d{4})$/
+  );
+
+  return !segmentedNumberString
+    ? ""
+    : "(" +
+        segmentedNumberString[1] +
+        ") " +
+        segmentedNumberString[2] +
+        "-" +
+        segmentedNumberString[3];
+};
+
+export const validEmail = email => {
+  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    email
+  );
+};
+
+export const getFirstAndLastName = name => {
+  const [firstName, ...savedLastNameAndSuffix] = (name || "").split(" ");
+
+  return {
+    firstName,
+    lastName: savedLastNameAndSuffix ? savedLastNameAndSuffix.join(" ") : ""
+  };
+};

@@ -2,6 +2,7 @@ import {
   SAVE_USER_DATA,
   SAVING_USER_DATA,
   LOAD_USER_DATA,
+  LOADING_USER_DATA,
   LOGGING_IN_USER,
   LOGIN_USER
 } from "../actions/types";
@@ -9,6 +10,8 @@ import {
 export default function(state = {}, action) {
   switch (action.type) {
     case LOAD_USER_DATA:
+      return action.payload;
+    case LOADING_USER_DATA:
       return action.payload;
     case SAVE_USER_DATA:
       return action.payload;

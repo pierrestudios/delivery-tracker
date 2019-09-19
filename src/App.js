@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
@@ -8,9 +8,18 @@ import PasswordRetrieve from "./components/pages/PasswordRetrieve";
 import Pages from "./components/pages";
 import Header from "./components/presentations/Header";
 
+import { loadUserData } from "./store/actions";
+
 export default () => {
   const { userAuth } = useSelector(state => state);
-  const { token: loggedIn } = userAuth;
+  const { token: loggedIn, loaded: authLoaded } = userAuth;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!authLoaded) {
+      dispatch(loadUserData());
+    }
+  }, [authLoaded]);
 
   return (
     <main id="app-container" className="container">
@@ -50,7 +59,7 @@ export default () => {
             <Route
               path="*"
               render={routerProps => {
-                if (!loggedIn && routerProps.match.url !== "/login") {
+                if (authLoaded && !loggedIn) {
                   return <Redirect to={"/login"} />;
                 }
 

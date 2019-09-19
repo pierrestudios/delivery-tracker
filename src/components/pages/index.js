@@ -2,14 +2,15 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import Home from "./Home";
+import Profile from "./Profile";
 import FindTools from "./FindTools";
+import Logout from "./Logout";
 
 export default props => {
   const routes = (
     <React.Fragment>
       <Route
         exact
-        key={"Home"}
         path={"/"}
         render={routerProps => (
           <Home
@@ -21,7 +22,6 @@ export default props => {
         )}
       />
       <Route
-        key={"FindTools"}
         path={"/find-tools"}
         render={routerProps => (
           <FindTools
@@ -31,6 +31,25 @@ export default props => {
             }}
           />
         )}
+      />
+      <Route
+        exact
+        path={"/profile"}
+        render={routerProps => (
+          <Profile
+            {...{
+              ...routerProps,
+              ...props
+            }}
+          />
+        )}
+      />
+      <Route
+        exact
+        path={"/logout"}
+        render={routerProps => {
+          return <Logout {...routerProps} />;
+        }}
       />
     </React.Fragment>
   );

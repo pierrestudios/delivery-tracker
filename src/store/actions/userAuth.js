@@ -1,6 +1,7 @@
 import {
   SAVE_USER_DATA,
   LOAD_USER_DATA,
+  LOADING_USER_DATA,
   SAVING_USER_DATA,
   LOGIN_USER,
   LOGGING_IN_USER
@@ -11,11 +12,17 @@ export function loadUserData() {
   return async (dispatch, getState) => {
     // await localStorage.removeItem("userData");
     const savedUserData = await localStorage.getItem("userData");
+    const { userAuth } = getState();
+
+    dispatch({
+      type: LOADING_USER_DATA,
+      payload: { ...userAuth, isLoading: true }
+    });
 
     if (!savedUserData) {
       return dispatch({
         type: LOAD_USER_DATA,
-        payload: { loaded: true }
+        payload: { loaded: true, isLoading: false }
       });
     }
 
@@ -32,13 +39,12 @@ export function loadUserData() {
         payload: {
           ...userData,
           loaded: true,
+          isLoading: false,
           token: "",
           loginError: "Session has expired"
         }
       });
     }
-
-    const { userAuth } = getState();
 
     dispatch({
       type: LOAD_USER_DATA,
@@ -47,7 +53,8 @@ export function loadUserData() {
         ...userData,
         ...authenticated,
         loginError: "",
-        loaded: true
+        loaded: true,
+        isLoading: false
       } // NOTE: DO NOT MUTATE
     });
   };
@@ -124,6 +131,30 @@ export function apiLogin({ password, email }) {
     dispatch({
       type: LOGIN_USER,
       payload: { ...userAuthData, isLoggingIn: false, loaded: true }
+    });
+  };
+}
+
+export function apiLogout() {
+  return async (dispatch, getState) => {
+    const { userAuth } = getState();
+
+    if (!userAuth.loaded && !userAuth.isLoading) {
+      dispatch(loadUserData());
+      setTimeout(() => {
+        dispatch(apiLogout());
+      }, 2000);
+      return;
+    }
+
+    const newAuthState = { ...userAuth, token: "" };
+    await localStorage.setItem("userData", JSON.stringify(newAuthState));
+
+    return dispatch({
+      type: LOGIN_USER,
+      payload: {
+        ...{ ...newAuthState, loaded: true }
+      }
     });
   };
 }

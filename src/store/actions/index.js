@@ -7,6 +7,7 @@ export {
 export {
   apiSignup,
   apiLogin,
+  apiLogout,
   apiRetrievePassword,
   loadUserData,
   saveUserData
