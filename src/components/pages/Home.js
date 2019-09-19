@@ -75,7 +75,7 @@ export default props => {
                 image,
                 id
               }) => (
-                <div className="col-md-4">
+                <div className="col-md-4" key={categoryId}>
                   <h4 className="service-heading">{categoryName}</h4>
                   <GalleryCard.Image src={image} />
                   <p className="text-muted">
