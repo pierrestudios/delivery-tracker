@@ -9,6 +9,7 @@ import Pages from "./components/pages";
 import Header from "./components/presentations/Header";
 
 import { loadUserData } from "./store/actions";
+import Footer from "./components/presentations/Footer";
 
 export default () => {
   const { userAuth } = useSelector(state => state);
@@ -22,58 +23,57 @@ export default () => {
   }, [authLoaded]);
 
   return (
-    <main id="app-container" className="container">
-      <div id="wrapper">
-        <BrowserRouter>
-          <Switch>
-            <Route
-              path={"/login"}
-              render={routerProps => {
-                if (loggedIn) {
-                  return <Redirect to={"/"} />;
-                }
+    <main id="app-container">
+      <BrowserRouter>
+        <Switch>
+          <Route
+            path={"/login"}
+            render={routerProps => {
+              if (loggedIn) {
+                return <Redirect to={"/"} />;
+              }
 
-                return <Login {...routerProps} />;
-              }}
-            />
-            <Route
-              path={"/signup"}
-              render={routerProps => {
-                if (loggedIn) {
-                  return <Redirect to={"/"} />;
-                }
+              return <Login {...routerProps} />;
+            }}
+          />
+          <Route
+            path={"/signup"}
+            render={routerProps => {
+              if (loggedIn) {
+                return <Redirect to={"/"} />;
+              }
 
-                return <Signup {...routerProps} />;
-              }}
-            />
-            <Route
-              path={"/retrieve-password"}
-              render={routerProps => {
-                if (loggedIn) {
-                  return <Redirect to={"/"} />;
-                }
+              return <Signup {...routerProps} />;
+            }}
+          />
+          <Route
+            path={"/retrieve-password"}
+            render={routerProps => {
+              if (loggedIn) {
+                return <Redirect to={"/"} />;
+              }
 
-                return <PasswordRetrieve {...routerProps} />;
-              }}
-            />
-            <Route
-              path="*"
-              render={routerProps => {
-                if (authLoaded && !loggedIn) {
-                  return <Redirect to={"/login"} />;
-                }
+              return <PasswordRetrieve {...routerProps} />;
+            }}
+          />
+          <Route
+            path="*"
+            render={routerProps => {
+              if (authLoaded && !loggedIn) {
+                return <Redirect to={"/login"} />;
+              }
 
-                return (
-                  <React.Fragment>
-                    <Header {...routerProps} />
-                    <Pages id="app-content" {...routerProps} />
-                  </React.Fragment>
-                );
-              }}
-            />
-          </Switch>
-        </BrowserRouter>
-      </div>
+              return (
+                <React.Fragment>
+                  <Header {...routerProps} />
+                  <Pages id="app-content" {...routerProps} />
+                </React.Fragment>
+              );
+            }}
+          />
+        </Switch>
+      </BrowserRouter>
+      <Footer />
     </main>
   );
 };

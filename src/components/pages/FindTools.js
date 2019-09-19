@@ -38,7 +38,7 @@ export default props => {
   // console.log({ selectedProduct, selectedCategory, selectedLocation });
 
   return (
-    <Page>
+    <Page className="container">
       <Modal
         {...{
           show: !!selectedProduct,
