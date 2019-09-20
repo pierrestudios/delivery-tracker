@@ -10,21 +10,25 @@ import LogoHeader from "../presentations/LogoHeader";
 export default () => {
   const dispatch = useDispatch();
   const { userAuth } = useSelector(state => state);
-  const { token: userToken, loginError, loaded: authLoaded = false } = userAuth;
-  const [loginData, saveLoginData] = useState({ ...userAuth, started: false });
-  const { email, password, error } = loginData;
+  const {
+    token: userToken,
+    isLoggingIn,
+    loginError,
+    loaded: authLoaded = false
+  } = userAuth;
+  const [loginData, saveLoginData] = useState({ ...userAuth, isLoading: true });
+  const { isLoading, email, password, error } = loginData;
 
   useEffect(() => {
-    // TODO: If "Save Login" is checked, spread ${userAuth} in saveLoginData fn
     if (loginError) {
       saveLoginData({
         ...userAuth,
         ...loginData,
         error: loginError,
-        started: true
+        isLoading: false
       });
     } else if (authLoaded && !userToken) {
-      saveLoginData({ ...userAuth, ...loginData, started: true });
+      saveLoginData({ ...userAuth, ...loginData, isLoading: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoaded, loginError]);
@@ -33,6 +37,16 @@ export default () => {
     userToken ? startAppWithAuth() : !authLoaded && startLoginApp();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken]);
+
+  useEffect(() => {
+    saveLoginData({
+      ...userAuth,
+      ...loginData,
+      error: loginError,
+      isLoading: isLoggingIn
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggingIn]);
 
   function startLoginApp() {
     setTimeout(() => {
@@ -49,7 +63,7 @@ export default () => {
     dispatch(apiLogin(loginData));
   }
 
-  return loginData && loginData.started ? (
+  return !isLoading ? (
     <div id="login-page" className="page-height">
       <LogoHeader />
 
@@ -137,6 +151,8 @@ export default () => {
       </Card>
     </div>
   ) : (
-    <Loading size="large" style={{ marginTop: 100 }} />
+    <div id="login-page" className="page-height">
+      <Loading size="large" style={{ marginTop: 100 }} />
+    </div>
   );
 };

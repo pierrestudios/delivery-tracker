@@ -100,7 +100,7 @@ export function apiLogin({ password, email }) {
 
     dispatch({
       type: LOGGING_IN_USER,
-      payload: { ...userAuth, isLoggingIn: true, loaded: true }
+      payload: { ...userAuth, isLoggingIn: true, loginError: "", loaded: true }
     });
 
     const login = await apiUnAuthPost("login", {
