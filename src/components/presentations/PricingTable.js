@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, Header, Table, Button, Badge } from "tabler-react";
+import { Header, Button, Badge } from "tabler-react";
 
-import { getDurationOptionValue, getDurationOptions } from "../../common/utils";
+import { getDurationOptions } from "../../common/utils";
 
 function showPriceTotals(selectedPriceOption, selectedDuration, priceData) {
   const { price, heading: selectedOption } = selectedPriceOption;
@@ -24,9 +24,7 @@ function showPriceTotals(selectedPriceOption, selectedDuration, priceData) {
 
 function showPriceOptions(data, updateSelection) {
   return data.map(({ heading, price }, key) => {
-    const { durationCount: count, durationLabel: label } = getDurationOptions(
-      heading
-    );
+    const { durationLabel: label } = getDurationOptions(heading);
     return (
       <Button
         key={key}
@@ -47,11 +45,8 @@ export default ({
   selectedDuration,
   reservation,
   selectPriceOption,
-  selectedPriceOption,
-  ...props
+  selectedPriceOption
 }) => {
-  const [firstOption] = data;
-
   return reservation ? (
     <div id="reserved-option">
       <Header.H5>{reservation.durationString}</Header.H5>

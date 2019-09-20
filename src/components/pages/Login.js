@@ -26,10 +26,12 @@ export default () => {
     } else if (authLoaded && !userToken) {
       saveLoginData({ ...userAuth, ...loginData, started: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoaded, loginError]);
 
   useEffect(() => {
     userToken ? startAppWithAuth() : !authLoaded && startLoginApp();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken]);
 
   function startLoginApp() {

@@ -20,6 +20,7 @@ export default () => {
     if (!authLoaded) {
       dispatch(loadUserData());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoaded]);
 
   return (
