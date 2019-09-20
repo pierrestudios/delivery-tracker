@@ -38,11 +38,10 @@ export default ({
           style={{
             marginBottom: 10,
             width: "90%"
-            // borderColor: "red", borderWidth: 1
           }}
         >
           <Form.Select
-            defaultValue={selectedValue}
+            value={selectedValue}
             onChange={e => {
               handleChange(e.target.value);
             }}
