@@ -78,7 +78,7 @@ export default () => {
     ) {
       return saveSignupData({
         ...signupData,
-        error: "Pssword confirmation doesn't match password"
+        error: "Password confirmation doesn't match password"
       });
     }
 
@@ -158,7 +158,7 @@ export default () => {
             </div>
 
             <Button
-              color="primary"
+              color="info"
               type="button"
               disabled={!email || !password || !passwordConfirm}
               className="mt-5 w-100"

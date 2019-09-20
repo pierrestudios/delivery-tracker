@@ -84,7 +84,7 @@ export default () => {
                 </div>
 
                 <Button
-                  color="primary"
+                  color="info"
                   type="button"
                   disabled={!email}
                   className="mt-5 w-100"
