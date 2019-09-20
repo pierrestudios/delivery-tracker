@@ -196,8 +196,10 @@ img::-moz-selection {
 
 header.masthead {
   text-align: center;
-  /* color: white;
-  background-image: url("../img/header-bg.jpg"); */
+  color: white;
+  background-image: url("../assets/images/hero.jpg");
+  background-color: #3c434e;
+  background-blend-mode: overlay;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;

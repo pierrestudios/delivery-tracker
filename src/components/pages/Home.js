@@ -70,7 +70,7 @@ export default () => {
               Welcome To <Logo />
             </div>
             <div className="intro-heading">EQUIPMENT &amp; TOOL RENTAL</div>
-            <Link className="btn btn-primary btn-xl" to="/find-tools">
+            <Link className="btn btn-warning btn-xl" to="/find-tools">
               Reserve Now!
             </Link>
           </div>
@@ -94,21 +94,34 @@ export default () => {
             {selectedProducts.map(
               ({
                 name,
+                otherProductsNames,
                 category: { name: categoryName, id: categoryId },
                 image,
                 id
               }) => (
                 <div className="col-md-4" key={categoryId}>
                   <h4 className="service-heading">{categoryName}</h4>
-                  <GalleryCard.Image src={image} />
+                  <GalleryCard.Image
+                    src={image}
+                    RootComponent={Link}
+                    to={`/find-tools/${selectedLocationId}/${categoryId}`}
+                  />
                   <p className="text-muted">
                     <strong>{name}</strong>
+                  </p>
+                  {otherProductsNames.slice(0, 3).map((p, inx) => (
+                    <p className="text-muted" key={inx}>
+                      <strong>{p}</strong>
+                    </p>
+                  ))}
+                  <p className="text-muted">
+                    <strong>&amp; many more...</strong>
                   </p>
                   <Link
                     className="btn btn-primary"
                     to={`/find-tools/${selectedLocationId}/${categoryId}`}
                   >
-                    More Details
+                    View More
                   </Link>
                 </div>
               )
