@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import { Icon, Form, Button } from "tabler-react";
+import { Link } from "react-router-dom";
+import { Icon, Form, Button, Alert, Header } from "tabler-react";
 import PlacesAutocomplete from "react-places-autocomplete";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -46,6 +47,7 @@ function setDurationValue(label, value) {
 }
 
 export default ({
+  isLoggedIn,
   currentReservation,
   updateCurrentReservation,
   submitReservation
@@ -415,15 +417,31 @@ export default ({
         }
       })}
 
-      <Button
-        color="success"
-        onClick={saveReservation}
-        className="mt-4 d-block"
-      >
-        <span className="font-weight-bold" style={{ fontSize: 14 }}>
-          Submit Reservation
-        </span>
-      </Button>
+      {isLoggedIn ? (
+        <Button
+          color="success"
+          onClick={saveReservation}
+          className="mt-4 d-block"
+        >
+          <span className="font-weight-bold" style={{ fontSize: 14 }}>
+            Submit Reservation
+          </span>
+        </Button>
+      ) : (
+        <Alert type="primary" className="mt-4 d-block">
+          <Header.H4>Please Sign In</Header.H4>
+          <p>Please sign in to complete reservation</p>
+          <Button.List>
+            <Link to="/login" className="btn btn-info">
+              Sign in
+            </Link>
+            <span className="p-3 text-wrap">Or</span>
+            <Link to="/signup" className="btn btn-info">
+              Create an Account
+            </Link>
+          </Button.List>
+        </Alert>
+      )}
     </div>
   );
 };

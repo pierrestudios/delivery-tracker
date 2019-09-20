@@ -11,9 +11,11 @@ export default ({ product, category, location }) => {
   const { image: uri, name: title, details } = product;
   const { name: categoryName } = category;
   const { desc, meta, pricingTable } = details && details[0];
-  const { reservations, locations, currentReservation } = useSelector(
+  const { reservations, locations, currentReservation, userAuth } = useSelector(
     state => state
   );
+  const { token: userToken, loaded: authLoaded } = userAuth;
+  const isLoggedIn = authLoaded && !!userToken;
   const { selectedPriceOption } = currentReservation;
   const { selectedDuration } = currentReservation;
 
@@ -91,6 +93,7 @@ export default ({ product, category, location }) => {
 
         {reservation ? null : (
           <ReserveForm
+            isLoggedIn={isLoggedIn}
             currentReservation={currentReservation}
             submitReservation={submitReservation}
             updateCurrentReservation={updateCurrentReservation}

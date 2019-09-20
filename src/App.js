@@ -60,13 +60,9 @@ export default () => {
           <Route
             path="*"
             render={routerProps => {
-              if (authLoaded && !loggedIn) {
-                return <Redirect to={"/login"} />;
-              }
-
               return (
                 <React.Fragment>
-                  <Header {...routerProps} />
+                  <Header {...routerProps} isLoggedIn={loggedIn} />
                   <Pages id="app-content" {...routerProps} />
                 </React.Fragment>
               );
