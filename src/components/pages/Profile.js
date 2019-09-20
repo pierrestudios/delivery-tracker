@@ -22,8 +22,17 @@ export default () => {
     userDataSaved,
     started: true
   });
-  const { email, phone, error } = userData;
-  const { firstName, lastName } = getFirstAndLastName(name);
+  const {
+    firstName: savedFirstName,
+    lastName: savedLastName
+  } = getFirstAndLastName(name);
+  const {
+    firstName = savedFirstName,
+    lastName = savedLastName,
+    email,
+    phone,
+    error
+  } = userData;
 
   useEffect(() => {
     if (userDataError) {
@@ -68,23 +77,17 @@ export default () => {
             {error ? <span className="text-danger">{error}</span> : null}
 
             <div className="mt-4 mb-4">
-              <Form.Label>Enter your email</Form.Label>
+              <Form.Label>Your email</Form.Label>
               <Form.Input
-                name="email"
                 placeholder="Email"
                 value={email}
-                onChange={e => {
-                  setUserData({
-                    ...userData,
-                    email: e.target.value,
-                    error: ""
-                  });
-                }}
+                readOnly={true}
+                onChange={() => {}}
               />
             </div>
 
             <div className="mt-4 mb-4">
-              <Form.Label>Enter your first name</Form.Label>
+              <Form.Label>Your first name</Form.Label>
               <Form.Input
                 name="firstName"
                 placeholder="First Name"
@@ -100,7 +103,7 @@ export default () => {
             </div>
 
             <div className="mt-4 mb-4">
-              <Form.Label>Enter your last name</Form.Label>
+              <Form.Label>Your last name</Form.Label>
               <Form.Input
                 name="lastName"
                 placeholder="Last Name"
@@ -116,7 +119,7 @@ export default () => {
             </div>
 
             <div className="mt-4 mb-4">
-              <Form.Label>Enter your phone</Form.Label>
+              <Form.Label>Your phone</Form.Label>
               <Form.Input
                 name="phone"
                 placeholder="Phone"
