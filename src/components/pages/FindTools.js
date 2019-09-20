@@ -15,10 +15,11 @@ import {
 } from "../../store/actions";
 import ProductDetails from "../containers/ProductDetails";
 
-export default props => {
+export default ({ match, history: { pathname } }) => {
+  const { locationId, categoryId } = match.params;
   const { categories, locations, products } = useSelector(state => state);
-  const [selectedLocation, selectLocation] = useState();
-  const [selectedCategory, selectCategory] = useState();
+  const [selectedLocationId, selectLocationId] = useState(locationId);
+  const [selectedCategoryId, selectCategoryId] = useState(categoryId);
   const [selectedProduct, selectProduct] = useState();
   const viewDetails = product => {
     selectProduct(product);
@@ -35,7 +36,22 @@ export default props => {
     return <div />;
   }
 
-  // console.log({ selectedProduct, selectedCategory, selectedLocation });
+  const filteredProducts = products.filter(
+    p => selectedCategoryId === p.category
+  );
+
+  useEffect(() => {
+    if (window.scroll) {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    } else {
+      // fallback for older browsers
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   return (
     <Page className="container page-height">
@@ -46,8 +62,8 @@ export default props => {
           bodyContent: selectedProduct ? (
             <ProductDetails
               product={selectedProduct}
-              category={categories.find(c => c.id === selectedCategory)}
-              location={locations.find(l => l.id === selectedLocation)}
+              category={categories.find(c => c.id === selectedCategoryId)}
+              location={locations.find(l => l.id === selectedLocationId)}
             />
           ) : null,
           handleClose: () => selectProduct(null)
@@ -61,25 +77,25 @@ export default props => {
         <Card.Body>
           <SelectPicker
             selectLabel="Location"
-            selectedValue={selectedLocation}
-            handleChange={selectLocation}
+            selectedValue={selectedLocationId}
+            handleChange={selectLocationId}
             data={locations}
           />
 
           <SelectPicker
             selectLabel="Category"
-            selectedValue={selectedCategory}
-            handleChange={selectCategory}
+            selectedValue={selectedCategoryId}
+            handleChange={selectCategoryId}
             data={categories}
-            display={!!selectedLocation}
+            display={!!selectedLocationId}
           />
 
-          {!!selectedCategory ? (
+          {!!selectedCategoryId ? (
             <ProductsList
-              location={selectedLocation}
-              category={selectedCategory}
+              location={selectedLocationId}
+              category={selectedCategoryId}
               viewDetails={viewDetails}
-              data={products}
+              data={filteredProducts}
             />
           ) : null}
         </Card.Body>

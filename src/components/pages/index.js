@@ -6,51 +6,16 @@ import Profile from "./Profile";
 import FindTools from "./FindTools";
 import Logout from "./Logout";
 
-export default props => {
+export default () => {
   const routes = (
     <React.Fragment>
+      <Route exact path={"/"} component={Home} />
       <Route
-        exact
-        path={"/"}
-        render={routerProps => (
-          <Home
-            {...{
-              ...routerProps,
-              ...props
-            }}
-          />
-        )}
+        path={"/find-tools/:locationId?/:categoryId?"}
+        component={FindTools}
       />
-      <Route
-        path={"/find-tools"}
-        render={routerProps => (
-          <FindTools
-            {...{
-              ...routerProps,
-              ...props
-            }}
-          />
-        )}
-      />
-      <Route
-        exact
-        path={"/profile"}
-        render={routerProps => (
-          <Profile
-            {...{
-              ...routerProps,
-              ...props
-            }}
-          />
-        )}
-      />
-      <Route
-        exact
-        path={"/logout"}
-        render={routerProps => {
-          return <Logout {...routerProps} />;
-        }}
-      />
+      <Route exact path={"/profile"} component={Profile} />
+      <Route exact path={"/logout"} component={Logout} />
     </React.Fragment>
   );
 

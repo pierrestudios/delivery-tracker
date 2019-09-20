@@ -5,11 +5,19 @@ import { Link } from "react-router-dom";
 
 import Logo from "../presentations/Logo";
 
-export default props => {
+export default () => {
   const selectedLocationId = "5d10209ebbde278fa3b797c1";
   const selectedProducts = [
     {
       name: "4.0 CFM Air Compressor",
+      otherProductsNames: [
+        "9.0 CFM Air Compressor",
+        "185 CFM Air Compressor",
+        "Air Chipping Hammer",
+        "1″ Air Paving Breaker",
+        "1 1/4″ Air Paving Breaker",
+        "1 1/8″ Air Paving Breaker"
+      ],
       category: {
         name: "Air Compressors & Air Tools",
         id: "5d101db988b1998f4b5a9858"
@@ -20,6 +28,13 @@ export default props => {
     },
     {
       name: "2″ Trash Pump Gasoline",
+      otherProductsNames: [
+        "2″ Trash Pump Gasoline",
+        "3″ Trash Pump Gasoline",
+        "3″ Diaphragm Pump Gasoline",
+        "4″ Trash Pump Gasoline",
+        "2″ x 20″ Suction Hose"
+      ],
       category: {
         name: "Pumps & Accessories",
         id: "5d101db988b1998f4b5a9861"
@@ -30,6 +45,13 @@ export default props => {
     },
     {
       name: "6′ x 2 1/2′ Narrow Scaffold Set",
+      otherProductsNames: [
+        "5′ x 5′ Scaffold Set",
+        "6′ x 5′ Scaffold Set",
+        "24′ Extension Ladder",
+        "28′ Extension Ladder",
+        "32′ Extension Ladder"
+      ],
       category: {
         name: "Scaffolding & Ladders",
         id: "5d101db988b1998f4b5a9863"
@@ -63,7 +85,8 @@ export default props => {
                 Popular Categories
               </h2>
               <h3 className="section-subheading text-muted">
-                Choose from our most popular categories
+                Choose from our most popular categories or{" "}
+                <Link to="/find-tools">search for tools</Link>
               </h3>
             </div>
           </div>
@@ -81,7 +104,10 @@ export default props => {
                   <p className="text-muted">
                     <strong>{name}</strong>
                   </p>
-                  <Link className="btn btn-primary" to="/find-tools">
+                  <Link
+                    className="btn btn-primary"
+                    to={`/find-tools/${selectedLocationId}/${categoryId}`}
+                  >
                     More Details
                   </Link>
                 </div>
