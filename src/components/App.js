@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import Login from "./components/pages/Login";
-import Signup from "./components/pages/Signup";
-import PasswordRetrieve from "./components/pages/PasswordRetrieve";
-import Pages from "./components/pages";
-import Header from "./components/presentations/Header";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import PasswordRetrieve from "./pages/PasswordRetrieve";
+import Pages from "./pages";
+import Header from "./presentations/Header";
 
-import { loadUserData } from "./store/actions";
-import Footer from "./components/presentations/Footer";
+import { loadUserData } from "../store/actions";
+import Footer from "./presentations/Footer";
 
 export default () => {
   const { userAuth } = useSelector(state => state);
