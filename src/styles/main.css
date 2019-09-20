@@ -6,7 +6,8 @@
   display: block;
 }
 .page-height {
-  min-height: 800px;
+  min-height: 100vh;
+  padding-top: 12px;
 }
 .header-nav li:last-child {
   margin-left: auto;
