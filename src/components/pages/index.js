@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import Home from "./Home";
 import Profile from "./Profile";
 import FindTools from "./FindTools";
+import Reservations from "./Reservations";
 import Logout from "./Logout";
 
 export default () => {
@@ -14,6 +15,7 @@ export default () => {
         path={"/find-tools/:locationId?/:categoryId?"}
         component={FindTools}
       />
+      <Route exact path={"/reservations"} component={Reservations} />
       <Route exact path={"/profile"} component={Profile} />
       <Route exact path={"/logout"} component={Logout} />
     </React.Fragment>
