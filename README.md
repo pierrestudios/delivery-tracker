@@ -1,7 +1,6 @@
 # Delivery Tracker App
 
-This project was created initially as a mobile application for iOS and Android for managing tools and equipment rental.
-It contains:
+This project was created to allow users to search for products, filter by location and category, and reserve a product for rental and delivery. It was created initially as a mobile application for iOS and Android. It contains:
 
 - User authentication (with JWT)
 - Product filtering and search
