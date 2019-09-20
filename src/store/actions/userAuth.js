@@ -164,6 +164,8 @@ export function apiSignup({ password, email }) {
     const signup = await apiUnAuthPost("signup", { password, email }).catch(
       () => false
     );
+    // TODO: Need to get error message for 'The email address is already in use by another account.'
+
     if (!signup || !signup.token) {
       return dispatch({
         type: SAVE_USER_DATA,

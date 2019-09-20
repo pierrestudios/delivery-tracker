@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card, Form, Button } from "tabler-react";
 import { Link } from "react-router-dom";
 
+import { isValidEmail } from "../../common/utils";
 import { apiSignup, loadUserData } from "../../store/actions";
 import Loading from "../presentations/Loading";
 import LogoHeader from "../presentations/LogoHeader";
@@ -16,7 +17,7 @@ export default () => {
     loaded: authLoaded = false
   } = userAuth;
   const [signupData, saveSignupData] = useState({ started: false });
-  const { email, password, passwordConfirm } = signupData;
+  const { email, password, passwordConfirm, error } = signupData;
 
   useEffect(() => {
     if (signupError) {
@@ -62,6 +63,14 @@ export default () => {
       });
     }
 
+    // Validate email is valid
+    if (!isValidEmail(signupData.email)) {
+      return saveSignupData({
+        ...signupData,
+        error: "Please enter a valid email"
+      });
+    }
+
     // Validate password confirm
     if (
       !signupData.passwordConfirm ||
@@ -92,9 +101,7 @@ export default () => {
           </div>
 
           <Form>
-            {signupError ? (
-              <span className="text-danger">{signupError}</span>
-            ) : null}
+            {error ? <span className="text-danger">{error}</span> : null}
 
             <div className="mt-4 mb-4">
               <Form.Label>Enter your Email</Form.Label>
