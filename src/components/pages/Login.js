@@ -141,10 +141,10 @@ export default () => {
         </Card.Body>
 
         <Card.Body className="justify-content-center">
-          <Link className="btn btn-info mt-3" to="/retrieve-password">
+          <Link className="btn btn mt-3" to="/retrieve-password">
             <span>Retrieve password</span>
           </Link>
-          <Link className="btn btn-info mt-3 float-right" to="/signup">
+          <Link className="btn btn mt-3 float-right" to="/signup">
             <span>Create Account</span>
           </Link>
         </Card.Body>

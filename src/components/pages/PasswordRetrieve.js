@@ -102,7 +102,7 @@ export default () => {
         </Card.Body>
 
         <Card.Body className="text-center">
-          <Link className="btn btn-info mt-3 " to="/login">
+          <Link className="btn btn mt-3 " to="/login">
             <span>Sign In to your Account</span>
           </Link>
         </Card.Body>
