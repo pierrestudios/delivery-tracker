@@ -9,6 +9,7 @@ import ProductsList from "../presentations/ProductsList";
 import Modal from "../presentations/Modal";
 
 import {
+  loadReservations,
   loadCategories,
   loadLocations,
   loadProducts
@@ -18,7 +19,14 @@ import Loading from "../presentations/Loading";
 
 export default ({ match, history: { pathname } }) => {
   const { locationId, categoryId } = match.params;
-  const { categories, locations, products } = useSelector(state => state);
+  const {
+    categories,
+    locations,
+    products,
+    reservations,
+    userAuth
+  } = useSelector(state => state);
+  const { token: userToken, loaded: authLoaded } = userAuth;
   const [selectedLocationId, selectLocationId] = useState(locationId);
   const [selectedCategoryId, selectCategoryId] = useState(categoryId);
   const [selectedProduct, selectProduct] = useState();
@@ -33,9 +41,11 @@ export default ({ match, history: { pathname } }) => {
     dispatch(loadProducts());
   }, [categories, locations, products]);
 
-  const filteredProducts = products.filter(
-    p => selectedCategoryId === p.category
-  );
+  useEffect(() => {
+    if (authLoaded && !!userToken) {
+      dispatch(loadReservations());
+    }
+  }, [reservations, authLoaded, userToken]);
 
   useEffect(() => {
     if (window.scroll) {
@@ -53,6 +63,10 @@ export default ({ match, history: { pathname } }) => {
   if (!products || !products.length) {
     return <Loading />;
   }
+
+  const filteredProducts = products.filter(
+    p => selectedCategoryId === p.category
+  );
 
   return (
     <Page className="container page-height">
