@@ -31,11 +31,12 @@ export function loadReservations(forceReload = false) {
     if (!products || !products.length) {
       dispatch(loadProducts());
       dispatch(loadReservations(forceReload));
+
       return;
     }
 
     const hydratedReservations =
-      !forceReload && reservations && reservations.length
+      !forceReload && reservations
         ? reservations
         : ((await retrieveFromDB("reservations", userToken)) || []).map(r => {
             const product = products.find(p => p.id === r.productId);

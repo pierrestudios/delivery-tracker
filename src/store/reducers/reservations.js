@@ -4,14 +4,14 @@ import {
   CURRENT_RESERVATION
 } from "../actions/types";
 
-export default function(state = [], action) {
+export default function(state = null, action) {
   switch (action.type) {
     case LOAD_RESERVATIONS:
       return action.payload;
 
     case ADD_RESERVATION:
       // Note: Do not mutate
-      const newState = state.slice();
+      const newState = (state || []).slice();
       newState.push(action.payload);
 
       return newState;

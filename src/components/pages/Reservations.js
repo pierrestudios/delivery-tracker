@@ -1,15 +1,52 @@
-import React from "react";
-import { Page } from "tabler-react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { Page, Card } from "tabler-react";
 
-export default () => (
-  <Page id="reservations-page" className="container page-height">
-    <div
-      className="h-7 m-7 text-center"
-      style={{
-        fontSize: 18
-      }}
-    >
-      Coming soon!
-    </div>
-  </Page>
-);
+import ReservationsList from "../presentations/ReservationsList";
+
+import { loadReservations } from "../../store/actions";
+import Loading from "../presentations/Loading";
+
+export default () => {
+  const { reservations, userAuth } = useSelector(state => state);
+  const { token: userToken, loaded: authLoaded } = userAuth;
+  const dispatch = useDispatch();
+  const viewDetails = reservation => {
+    // navigation.navigate("ReservationDetails", { reservation });
+  };
+  const reLoadData = () => {
+    dispatch(loadReservations(true));
+  };
+
+  useEffect(() => {
+    if (authLoaded && !!userToken) {
+      dispatch(loadReservations());
+    }
+  }, [reservations, authLoaded, userToken]);
+
+  if (authLoaded && !userToken) {
+    return <Redirect to={"/login"} />;
+  }
+
+  if (!reservations || !authLoaded) {
+    return <Loading />;
+  }
+
+  return (
+    <Page id="reservations-page" className="container page-height">
+      <Card>
+        <Card.Header>
+          <span>My Rentals</span>
+        </Card.Header>
+        <Card.Body>
+          <ReservationsList
+            viewDetails={viewDetails}
+            data={reservations}
+            reLoadData={reLoadData}
+          />
+        </Card.Body>
+      </Card>
+    </Page>
+  );
+};
