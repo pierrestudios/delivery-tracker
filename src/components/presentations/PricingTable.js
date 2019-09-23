@@ -14,7 +14,7 @@ function showPriceTotals(selectedPriceOption, selectedDuration, priceData) {
   }
   const totalPrice = parseFloat(price) * parseInt(durationCount);
   return !!selectedPriceOption ? (
-    <div id="price-totals" style={{ marginBottom: 10, marginTop: 20 }}>
+    <div id="price-totals" className="mt-4 mb-4">
       <strong>
         <span>Total:</span> ${totalPrice.toFixed(2)}
       </strong>
@@ -49,13 +49,15 @@ export default ({
 }) => {
   return reservation ? (
     <div id="reserved-option">
-      <Header.H5>{reservation.durationString}</Header.H5>
-      <Badge color="warning" style={{ marginTop: 10, marginBottom: 10 }}>
+      <Header.H5>Product is Reserved</Header.H5>
+      <span className="text-left text-muted font-weight-bold m-2">
+        {`Price: $${reservation.reservationTotal} for ${reservation.durationCount} ${reservation.durationType}`}
+      </span>
+
+      <span className="text-left text-muted font-weight-bold m-2">Status</span>
+      <Badge color="warning" className="p-3">
         <span>Reserved</span>
       </Badge>
-      <div
-        style={{ textAlign: "left", fontSize: 18, color: "#ccc" }}
-      >{`Price: $${reservation.reservationTotal} for ${reservation.durationCount} ${reservation.durationType}`}</div>
     </div>
   ) : (
     <div id="pricing-table">

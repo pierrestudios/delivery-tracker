@@ -18,11 +18,6 @@ export default ({ product, category, location }) => {
   const isLoggedIn = authLoaded && !!userToken;
   const { selectedPriceOption } = currentReservation;
   const { selectedDuration } = currentReservation;
-
-  if (!reservations || !locations) {
-    return <div />;
-  }
-
   const dispatch = useDispatch();
   const updateCurrentReservation = data => {
     dispatch(saveCurrentReservation(data));
@@ -40,7 +35,8 @@ export default ({ product, category, location }) => {
   const submitReservation = data => {
     dispatch(addReservation(data));
   };
-  const reservation = reservations.find(r => r.productId === product.id);
+  const reservation =
+    reservations && reservations.find(r => r.productId === product.id);
   const descText = desc && desc.replace(/,/gi, " • ");
 
   useEffect(() => {

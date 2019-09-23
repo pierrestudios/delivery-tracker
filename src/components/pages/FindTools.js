@@ -14,6 +14,7 @@ import {
   loadProducts
 } from "../../store/actions";
 import ProductDetails from "../containers/ProductDetails";
+import Loading from "../presentations/Loading";
 
 export default ({ match, history: { pathname } }) => {
   const { locationId, categoryId } = match.params;
@@ -32,10 +33,6 @@ export default ({ match, history: { pathname } }) => {
     dispatch(loadProducts());
   }, [categories, locations, products]);
 
-  if (!products) {
-    return <div />;
-  }
-
   const filteredProducts = products.filter(
     p => selectedCategoryId === p.category
   );
@@ -53,13 +50,17 @@ export default ({ match, history: { pathname } }) => {
     }
   }, [pathname]);
 
+  if (!products || !products.length) {
+    return <Loading />;
+  }
+
   return (
     <Page className="container page-height">
       <Modal
         {...{
           show: !!selectedProduct,
           title: "Tools Details",
-          bodyContent: selectedProduct ? (
+          bodyContent: !!selectedProduct ? (
             <ProductDetails
               product={selectedProduct}
               category={categories.find(c => c.id === selectedCategoryId)}
