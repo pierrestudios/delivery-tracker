@@ -9,8 +9,6 @@ export default ({ viewDetails, reservation }) => {
     reservationTotal
   } = reservation;
 
-  console.log({ reservation });
-
   return (
     <Grid.Row cards deck className="border-bottom pb-3 pt-3">
       <Grid.Col md={2}>

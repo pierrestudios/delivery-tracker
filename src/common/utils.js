@@ -45,11 +45,17 @@ export const makeSingularOrPlural = (label, count) => {
     : label;
 };
 export const reservationBadgeConfig = {
-  new: { color: "#529ef3", label: "Waiting for confirmation" },
-  confirmed: { color: "#eb9e3e", label: "Reserved" },
-  enRoute: { color: "#4dac4a", label: "Out for Delivery" },
-  delivered: { color: "#0960ff", label: "Delivered" },
-  canceled: { color: "#ccc", label: "Canceled" }
+  new: { color: "info", label: "Waiting for confirmation" },
+  confirmed: { color: "danger", label: "Reserved" },
+  enRoute: { color: "success", label: "Out for Delivery" },
+  delivered: { color: "primary", label: "Delivered" },
+  canceled: { color: "secondary", label: "Canceled" }
+};
+export const getStatusBadgeColor = (status = "new") => {
+  return reservationBadgeConfig[status].color;
+};
+export const getStatusBadgeLabel = (status = "new") => {
+  return reservationBadgeConfig[status].label;
 };
 export const generateTimeOptions = (step = 30, startTitme = "8:00") => {
   function addStepToTime(step, time) {

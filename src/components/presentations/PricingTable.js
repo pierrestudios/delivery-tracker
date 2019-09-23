@@ -1,7 +1,11 @@
 import React from "react";
 import { Header, Button, Badge } from "tabler-react";
 
-import { getDurationOptions } from "../../common/utils";
+import {
+  getDurationOptions,
+  getStatusBadgeColor,
+  getStatusBadgeLabel
+} from "../../common/utils";
 
 function showPriceTotals(selectedPriceOption, selectedDuration, priceData) {
   const { price, heading: selectedOption } = selectedPriceOption;
@@ -55,8 +59,8 @@ export default ({
       </span>
 
       <span className="text-left text-muted font-weight-bold m-2">Status</span>
-      <Badge color="warning" className="p-3">
-        <span>Reserved</span>
+      <Badge color={getStatusBadgeColor(reservation.status)} className="p-3">
+        <span>{getStatusBadgeLabel(reservation.status)}</span>
       </Badge>
     </div>
   ) : (
