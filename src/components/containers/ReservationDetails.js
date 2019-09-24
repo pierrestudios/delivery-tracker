@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Header, Badge } from "tabler-react";
+import { Card, Grid, Badge } from "tabler-react";
 
 import {
   getPickupDate,
@@ -16,8 +16,9 @@ export default ({ reservation }) => {
     const category = categories.find(p => p.id === product.category);
   };
   const renderProductView = props => {
-    const { name, details, image, viewDetails } = props;
+    const { name, details, image } = props;
     const { desc } = (details && details[0]) || {};
+    const descText = desc && desc.replace(/,/gi, " • ");
     return (
       <div
         className="d-flex"
@@ -49,33 +50,21 @@ export default ({ reservation }) => {
           }}
         >
           <span className="mr-2 font-weight-bold d-block">{name.trim()}</span>
-          <span className="text-black">{desc.trim()}</span>
+          <span className="text-black">{descText.trim()}</span>
         </div>
       </div>
     );
   };
   const renderRow = (label, value) => {
     return (
-      <div>
-        <span
-          className="text-muted d-inline-block"
-          style={{
-            minWidth: 70,
-            width: "20%"
-          }}
-        >
+      <Grid.Row cards deck className="border-bottom pb-3 pt-3">
+        <Grid.Col md={4} className="text-muted d-inline-block">
           {label}
-        </span>
-        <span
-          className="text-black font-weight-bold ml-1"
-          style={{
-            fontSize: 14,
-            width: "80%"
-          }}
-        >
+        </Grid.Col>
+        <Grid.Col md={8} className="text-black font-weight-bold">
           {value}
-        </span>
-      </div>
+        </Grid.Col>
+      </Grid.Row>
     );
   };
   const getStatusBadge = status => {
@@ -124,10 +113,10 @@ export default ({ reservation }) => {
       </Card.Header>
       <Card.Body>
         {renderRow("Duration", durationString)}
-        {renderRow("Delivery", `${deliveryDate} ${deliveryTime}`)}
-        {renderRow("Pickup", `${pickupDate} ${pickupTime}`)}
-        {renderRow("From", deliverySource)}
-        {renderRow("To", deliveryAddress)}
+        {renderRow("Delivery Date/Time", `${deliveryDate} ${deliveryTime}`)}
+        {renderRow("Pickup Date/Time", `${pickupDate} ${pickupTime}`)}
+        {renderRow("Delivery From", deliverySource)}
+        {renderRow("Delivery To", deliveryAddress)}
       </Card.Body>
       <Card.Body>
         <span className="font-weight-bold mb-3">Tool/Equipment </span>

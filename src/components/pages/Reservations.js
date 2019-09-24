@@ -41,7 +41,7 @@ export default () => {
       <Modal
         {...{
           show: !!selectedReservation,
-          title: "Tools Details",
+          title: "Rental Details",
           bodyContent: !!selectedReservation ? (
             <ReservationDetails reservation={selectedReservation} />
           ) : null,
