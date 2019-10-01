@@ -45,12 +45,17 @@ export const makeSingularOrPlural = (label, count) => {
     : label;
 };
 export const reservationBadgeConfig = {
-  new: { color: "info", label: "Waiting for confirmation" },
-  confirmed: { color: "danger", label: "Reserved" },
+  new: { color: "info", label: "Waiting for Confirmation" },
+  confirmed: { color: "danger", label: "Reservation Confirmed" },
   enRoute: { color: "success", label: "Out for Delivery" },
   delivered: { color: "primary", label: "Delivered" },
   canceled: { color: "secondary", label: "Canceled" }
 };
+export const reservationTrackingSteps = [
+  { status: "confirmed", label: "Confirmed" },
+  { status: "enRoute", label: "Out for Delivery" },
+  { status: "delivered", label: "Delivered" }
+];
 export const getStatusBadgeColor = (status = "new") => {
   return reservationBadgeConfig[status].color;
 };
