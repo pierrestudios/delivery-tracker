@@ -56,7 +56,7 @@ export default ({ product, category, location }) => {
               src={uri}
               style={{
                 minHeight: 200,
-                maxWidth: 400,
+                maxWidth: 300,
                 width: "100%",
                 margin: "auto",
                 flex: 1
