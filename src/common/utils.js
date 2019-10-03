@@ -5,16 +5,17 @@ export const getPickupDate = (dateStr, duration) => {
   return formatDate(pickupDate);
 };
 export const formatTime = dateTime => {
-  let h = dateTime.getHours();
-  if (h > 12) {
-    h = h - 12;
+  let hours = dateTime.getHours();
+  if (hours > 12) {
+    hours = hours - 12;
   }
-  if (h === 0) {
-    h = 12;
+  if (hours === 0) {
+    hours = 12;
   }
-  const m = makeTwoDigits(dateTime.getMinutes());
+  const minutes = makeTwoDigits(dateTime.getMinutes());
   const amPm = dateTime.getHours() > 11 ? "PM" : "AM";
-  return h + ":" + m + " " + amPm;
+
+  return hours + ":" + minutes + " " + amPm;
 };
 export const formatDate = dateTime => {
   const y = dateTime.getFullYear();
@@ -89,7 +90,6 @@ export const generateTimeOptions = (step = 30, startTitme = "8:00") => {
     value: t
   }));
 };
-
 export const formatPhone = numberString => {
   const digits = numberString.replace(/\D/g, "");
   const totalNumber = 10;
@@ -115,13 +115,11 @@ export const formatPhone = numberString => {
         "-" +
         segmentedNumberString[3];
 };
-
 export const isValidEmail = email => {
   return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
 };
-
 export const getFirstAndLastName = name => {
   const [firstName, ...savedLastNameAndSuffix] = (name || "").split(" ");
 
