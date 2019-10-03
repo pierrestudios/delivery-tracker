@@ -6,17 +6,20 @@ import {
 } from "./types";
 import { loadProducts } from "./staticData";
 import { retrieve as retrieveFromDB, save as saveToDB } from "./apiActions";
+import { getDurationOptions } from "../../common/utils";
 
-function hydrate(data, product) {
-  const [durationCount, durationType] = data.duration.split(" ");
+function hydrate(data) {
+  const { durationCount, durationLabel: durationType } = getDurationOptions(
+    data.duration
+  );
   const reservationTotal =
     parseFloat(data.reservationPrice) * parseInt(durationCount);
+
   return {
     ...data,
     durationType,
     durationCount,
-    reservationTotal,
-    productName: product.name
+    reservationTotal
   };
 }
 
@@ -26,13 +29,17 @@ export function loadReservations(forceReload = false) {
       type: LOADING_RESERVATIONS
     });
 
-    const { reservations, products, userAuth } = getState();
-    const { token: userToken } = userAuth;
-    if (!products || !products.length) {
-      dispatch(loadProducts());
-      dispatch(loadReservations(forceReload));
+    const {
+      reservations,
+      products,
+      userAuth: { token: userToken }
+    } = getState();
 
-      return;
+    if (!products || !products.length) {
+      return (() => {
+        dispatch(loadProducts());
+        dispatch(loadReservations(forceReload));
+      })();
     }
 
     const hydratedReservations =
@@ -40,7 +47,7 @@ export function loadReservations(forceReload = false) {
         ? reservations
         : ((await retrieveFromDB("reservations", userToken)) || []).map(r => {
             const product = products.find(p => p.id === r.productId);
-            return hydrate(r, product);
+            return hydrate({ ...r, productName: product.name });
           });
 
     dispatch({
@@ -52,13 +59,16 @@ export function loadReservations(forceReload = false) {
 
 export function addReservation(data) {
   return async (dispatch, getState) => {
-    const { products, userAuth } = getState();
-    const { token: userToken } = userAuth;
+    const {
+      products,
+      userAuth: { token: userToken }
+    } = getState();
     const savedReservation = await saveToDB("reservations", data, userToken);
     const product = products.find(p => p.id === data.productId);
-    const reservation = hydrate(savedReservation, product);
-
-    console.log({ reservation, savedReservation });
+    const reservation = hydrate({
+      ...savedReservation,
+      productName: product.name
+    });
 
     dispatch({
       type: ADD_RESERVATION,
@@ -70,7 +80,6 @@ export function addReservation(data) {
 export function saveCurrentReservation(data) {
   return async (dispatch, getState) => {
     const { currentReservation } = getState();
-    // console.log({ currentReservation, data });
     dispatch({
       type: CURRENT_RESERVATION,
       payload: { ...currentReservation, ...data }

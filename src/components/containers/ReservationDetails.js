@@ -42,7 +42,7 @@ export default ({ reservation }) => {
             }
 
             return (
-              <span className="text-black d-inline-block mr-1 pl-2">
+              <span className="text-black d-inline-block mr-1 pl-2" key={label}>
                 <span className="text-uppercase">{label}</span>:
                 <span className="font-weight-bold">{value}</span>
               </span>
@@ -73,7 +73,11 @@ export default ({ reservation }) => {
   };
   const renderTrackingRow = (isPassedStatus, label) => {
     return (
-      <Grid.Col md={4} className="text-black font-weight-bold text-center">
+      <Grid.Col
+        key={label}
+        md={4}
+        className="text-black font-weight-bold text-center"
+      >
         <span className="m-2">
           <Avatar icon="check" color={isPassedStatus ? "success" : "grey"} />
         </span>

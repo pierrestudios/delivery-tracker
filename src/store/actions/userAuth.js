@@ -55,7 +55,7 @@ export function loadUserData() {
         loginError: "",
         loaded: true,
         isLoading: false
-      } // NOTE: DO NOT MUTATE
+      }
     });
   };
 }
@@ -63,7 +63,6 @@ export function loadUserData() {
 export function saveUserData({ name, phone }) {
   return async (dispatch, getState) => {
     const { userAuth } = getState();
-    const { id, token: userToken } = userAuth;
 
     dispatch({
       type: SAVING_USER_DATA,
@@ -73,23 +72,26 @@ export function saveUserData({ name, phone }) {
       }
     });
 
+    const { id, token: userToken } = userAuth;
     const userSaved = await apiPostRequest(
       "user-data",
       { name, phone },
       userToken
     ).catch(() => false);
 
-    const userAuthData = {
-      phone,
-      name,
-      id,
-      isSaving: false,
-      userDataSaved: true
-    };
+    if (!userSaved) {
+      // TODO: Need to return errors
+    }
 
     dispatch({
       type: SAVE_USER_DATA,
-      payload: userAuthData
+      payload: {
+        id,
+        name,
+        phone,
+        isSaving: false,
+        userDataSaved: true
+      }
     });
   };
 }
@@ -140,11 +142,12 @@ export function apiLogout() {
     const { userAuth } = getState();
 
     if (!userAuth.loaded && !userAuth.isLoading) {
-      dispatch(loadUserData());
-      setTimeout(() => {
-        dispatch(apiLogout());
-      }, 2000);
-      return;
+      return (() => {
+        dispatch(loadUserData());
+        setTimeout(() => {
+          dispatch(apiLogout());
+        }, 2000);
+      })();
     }
 
     const newAuthState = { ...userAuth, token: "" };
@@ -153,7 +156,8 @@ export function apiLogout() {
     return dispatch({
       type: LOGIN_USER,
       payload: {
-        ...{ ...newAuthState, loaded: true }
+        ...newAuthState,
+        loaded: true
       }
     });
   };
@@ -183,6 +187,7 @@ export function apiSignup({ password, email }) {
       token: signup.token,
       id: signup.id
     };
+
     await localStorage.setItem("userData", JSON.stringify(userAuthData));
 
     dispatch({
