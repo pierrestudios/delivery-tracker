@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Form, Button } from "tabler-react";
 
@@ -15,6 +16,7 @@ export default () => {
     isSaving,
     userDataError,
     userDataSaved = false,
+    token: userToken,
     loaded: authLoaded = false
   } = userAuth;
   const [userData, setUserData] = useState({
@@ -56,8 +58,17 @@ export default () => {
   }
 
   function saveData() {
-    const { firstName, lastName } = userData;
+    const {
+      firstName: savedFirstName,
+      lastName: savedLastName
+    } = getFirstAndLastName(userData.name);
+    const { firstName = savedFirstName, lastName = savedLastName } = userData;
+
     dispatch(saveUserData({ ...userData, name: `${firstName} ${lastName}` }));
+  }
+
+  if (authLoaded && !userToken) {
+    return <Redirect to={"/login"} />;
   }
 
   return userData && userData.started ? (
@@ -148,6 +159,6 @@ export default () => {
       </Card>
     </div>
   ) : (
-    <Loading size="large" style={{ marginTop: 100 }} />
+    <Loading style={{ marginTop: 100 }} />
   );
 };
