@@ -90,30 +90,29 @@ export const generateTimeOptions = (step = 30, startTitme = "8:00") => {
     value: t
   }));
 };
-export const formatPhone = numberString => {
-  const digits = numberString.replace(/\D/g, "");
-  const totalNumber = 10;
+export const formatPhone = entry => {
+  const digits = entry.replace(/\D/g, "");
+  const totalDigitsForUSA = 10;
 
-  if (digits.length < totalNumber) {
+  if (digits.length < totalDigitsForUSA) {
     return digits;
   }
 
-  const formattedNumberString =
-    digits.length > totalNumber ? digits.slice(0, totalNumber) : digits;
+  const phoneNumber =
+    digits.length > totalDigitsForUSA
+      ? digits.slice(0, totalDigitsForUSA)
+      : digits;
 
-  // const numberString2 = numberString.replace(/\D/g, "");
-  const segmentedNumberString = formattedNumberString.match(
-    /^(\d{3})(\d{3})(\d{4})$/
-  );
+  const formattedPhoneNumber = phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-  return !segmentedNumberString
+  return !formattedPhoneNumber
     ? ""
     : "(" +
-        segmentedNumberString[1] +
+        formattedPhoneNumber[1] +
         ") " +
-        segmentedNumberString[2] +
+        formattedPhoneNumber[2] +
         "-" +
-        segmentedNumberString[3];
+        formattedPhoneNumber[3];
 };
 export const isValidEmail = email => {
   return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -121,10 +120,10 @@ export const isValidEmail = email => {
   );
 };
 export const getFirstAndLastName = name => {
-  const [firstName, ...savedLastNameAndSuffix] = (name || "").split(" ");
+  const [firstName, ...lastNameAndSuffix] = (name || "").split(" ");
 
   return {
     firstName,
-    lastName: savedLastNameAndSuffix ? savedLastNameAndSuffix.join(" ") : ""
+    lastName: lastNameAndSuffix ? lastNameAndSuffix.join(" ") : ""
   };
 };

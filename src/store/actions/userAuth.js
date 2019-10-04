@@ -8,6 +8,8 @@ import {
 } from "./types";
 import { apiPostRequest, apiUnAuthPost } from "../../common/api";
 
+const LOGOUT_DELAY = 2000;
+
 export function loadUserData() {
   return async (dispatch, getState) => {
     // await localStorage.removeItem("userData");
@@ -146,7 +148,7 @@ export function apiLogout() {
         dispatch(loadUserData());
         setTimeout(() => {
           dispatch(apiLogout());
-        }, 2000);
+        }, LOGOUT_DELAY);
       })();
     }
 

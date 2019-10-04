@@ -11,7 +11,7 @@ export default ({ product, category, location }) => {
   const { image: uri, name: title, details } = product;
   const { name: categoryName } = category;
   const { desc, meta, pricingTable } = details && details[0];
-  const { reservations, locations, currentReservation, userAuth } = useSelector(
+  const { reservations, currentReservation, userAuth } = useSelector(
     state => state
   );
   const { token: userToken, loaded: authLoaded } = userAuth;
@@ -55,8 +55,8 @@ export default ({ product, category, location }) => {
             <img
               src={uri}
               style={{
-                minHeight: 200,
-                maxWidth: 300,
+                minHeight: 150,
+                maxWidth: 200,
                 width: "100%",
                 margin: "auto",
                 flex: 1

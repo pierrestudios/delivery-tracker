@@ -12,7 +12,6 @@ const apiRequest = async (url, data, type = "GET", headerData = undefined) => {
       body: data ? JSON.stringify(data) : undefined // Fix for Edge "TypeMismatchError"
     })
       .then(async res => {
-        // console.log("res", { res });
         if (!res.ok) {
           return Promise.reject(res.statusText || "Code: " + res.status);
         }
@@ -22,15 +21,10 @@ const apiRequest = async (url, data, type = "GET", headerData = undefined) => {
           return res
             .json()
             .then(json => {
-              // console.log('json', json);
-              // let error = new Error(json.error || res.statusText);
-              // error.response = res;
-              // throw error;
               return Promise.reject(json.error);
             })
             .catch(E => {
               console.log("E", E);
-              // console.log('res.statusText', res.statusText);
               return Promise.reject(E || res.statusText);
             });
         }
@@ -38,8 +32,6 @@ const apiRequest = async (url, data, type = "GET", headerData = undefined) => {
         return res.json();
       })
       .then(Response => {
-        // Catch Form Validation errors
-        // console.log("res", { Response });
         if ("error" in Response) {
           if (Response.error && typeof Response.error === "string") {
             return Promise.reject(Response.error);
@@ -64,7 +56,7 @@ const apiRequest = async (url, data, type = "GET", headerData = undefined) => {
 
         return Response;
       })
-      // Check for Token
+      // Check for new Token
       .then(json => {
         if (json.token) return { data: { token: json.token } };
         return json;
@@ -72,7 +64,6 @@ const apiRequest = async (url, data, type = "GET", headerData = undefined) => {
       .then(json => json.data)
       .catch(e => {
         console.log("Api > catch() Error", e);
-        // console.log(" url", API_URL + url);
 
         return Promise.reject(e);
       })
