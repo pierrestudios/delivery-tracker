@@ -47,7 +47,12 @@ export default ({ product, category, location }) => {
     <Card>
       <Card.Header style={{ flexDirection: "column" }}>
         <strong style={{ fontSize: 18 }}>{title}</strong>
-        <span style={{ color: "#999", marginLeft: 5 }}>{categoryName}</span>
+        <span
+          style={{ color: "#999", marginLeft: 5 }}
+          className="d-md-block d-none"
+        >
+          {categoryName}
+        </span>
       </Card.Header>
       {selectedPriceOption && !reservation ? null : (
         <>
@@ -69,7 +74,9 @@ export default ({ product, category, location }) => {
                 {m}
               </strong>
             ))}
-            <div style={{ color: "#333" }}>{descText}</div>
+            <div style={{ color: "#333" }} className="d-md-block d-none">
+              {descText}
+            </div>
           </Card.Body>
         </>
       )}

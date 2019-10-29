@@ -26,19 +26,21 @@ function showPriceTotals(selectedPriceOption, selectedDuration, priceData) {
   ) : null;
 }
 
-function showPriceOptions(data, updateSelection) {
+function showPriceOptions(data, updateSelection, selectedPriceOption) {
   return data.map(({ heading, price }, key) => {
     const { durationLabel: label } = getDurationOptions(heading);
     return (
       <Button
         key={key}
-        className="mr-3"
-        color="success"
+        className=""
+        color={`success ${
+          selectedPriceOption && selectedPriceOption.heading === heading
+            ? "active"
+            : ""
+        }`}
         onClick={() => updateSelection({ heading, price })}
       >
-        <div style={{ fontSize: 14, fontWeight: "800" }}>
-          {`$${price} / ${label}`}
-        </div>
+        <span style={{ fontWeight: "800" }}>{`$${price}/${label}`}</span>
       </Button>
     );
   });
@@ -66,7 +68,9 @@ export default ({
   ) : (
     <div id="pricing-table">
       <Header.H5>Price Options</Header.H5>
-      {showPriceOptions(data, selectPriceOption)}
+      <div className="btn-group" role="group">
+        {showPriceOptions(data, selectPriceOption, selectedPriceOption)}
+      </div>
       {!!selectedPriceOption
         ? showPriceTotals(selectedPriceOption, selectedDuration, data)
         : null}
