@@ -60,6 +60,11 @@ export default () => {
   }
 
   function sendLogin() {
+    saveLoginData({
+      ...loginData,
+      error: "",
+      isLoading: true
+    });
     dispatch(apiLogin(loginData));
   }
 

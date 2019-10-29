@@ -82,6 +82,8 @@ export default () => {
       });
     }
 
+    saveSignupData({ ...signupData, started: false });
+
     dispatch(apiSignup(signupData));
   }
 
