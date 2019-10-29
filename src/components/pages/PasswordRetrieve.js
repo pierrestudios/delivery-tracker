@@ -46,7 +46,9 @@ export default () => {
 
   return loginData && loginData.started ? (
     <div id="login-page" className="page-height">
-      <LogoHeader />
+      <Link to="/">
+        <LogoHeader />
+      </Link>
 
       <Card className="max-w-500 m-auto">
         <Card.Body header style={{ alignContent: "center" }}>
