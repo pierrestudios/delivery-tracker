@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Grid, Badge, Avatar, GalleryCard } from "tabler-react";
 
@@ -13,6 +13,9 @@ import { loadProducts, loadCategories } from "../../store/actions";
 import Loading from "../presentations/Loading";
 
 export default ({ reservation }) => {
+  const ANIMATION_TIME = 1000;
+  const [animationReady, setAnimationReady] = useState(false);
+  const [animationDone, setAnimationDone] = useState(false);
   const viewProductDetails = product => {
     const category = categories.find(p => p.id === product.category);
   };
@@ -89,10 +92,18 @@ export default ({ reservation }) => {
     return (
       <div className="position-relative tracking-steps">
         <span className="d-block position-absolute track"></span>
+        <span
+          className={`d-block position-absolute track-active ${
+            animationReady && currentStatus === "enRoute" ? "en-route" : ""
+          } ${
+            animationReady && currentStatus === "delivered" ? "delivered" : ""
+          }`}
+        ></span>
         <Grid.Row cards deck className="border-top pt-3">
           {reservationTrackingSteps.map(({ label, status }) => {
             const isPassedStatus =
-              currentStatus === status ||
+              (currentStatus === status &&
+                (status === "confirmed" || animationDone)) ||
               (currentStatus === "enRoute" && status === "confirmed") ||
               currentStatus === "delivered";
             return renderTrackingRow(isPassedStatus, label);
@@ -108,6 +119,13 @@ export default ({ reservation }) => {
     !products.length && dispatch(loadProducts());
     !categories.length && dispatch(loadCategories());
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimationReady(true);
+      setTimeout(() => setAnimationDone(true), ANIMATION_TIME);
+    }, ANIMATION_TIME);
+  }, []);
 
   if (!products.length || !categories.length) {
     return <Loading />;

@@ -41,12 +41,27 @@
   background-color: #5eba00;
   color: #fff;
 }
-.tracking-steps .track {
+.tracking-steps .track,
+.tracking-steps .track-active {
   top: 37px;
-  width: 70% !important;
-  margin: auto;
   left: 15%;
+  margin: auto;
+  transition: width 2s;
   border-top: dotted 2px #ccc;
+}
+.tracking-steps .track {
+  width: 70% !important;
+}
+.tracking-steps .track-active {
+  border-top: solid 6px #5eba00;
+  width: 0;
+  top: 35px;
+}
+.tracking-steps .track-active.en-route {
+  width: 35%;
+}
+.tracking-steps .track-active.delivered {
+  width: 70%;
 }
 .card-body > .border-bottom:last-child {
   border-bottom: none !important;
