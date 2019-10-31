@@ -113,7 +113,7 @@ export default ({ reservation, viewDeliveryTracker }) => {
         <Grid.Row className="pt-5 m-4 justify-content-center">
           {animationDone && currentStatus === "enRoute" ? (
             <Button color="success" onClick={viewDeliveryTracker}>
-              Track your delivery
+              Track Delivery
             </Button>
           ) : null}
         </Grid.Row>
