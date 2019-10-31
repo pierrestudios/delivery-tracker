@@ -1,52 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Grid, Badge, Avatar, GalleryCard, Button } from "tabler-react";
+import { Card } from "tabler-react";
 
 import { trackReservation } from "../../store/actions";
+
+const TIMEOUT_DELAY = 500;
 
 export default ({ reservation = {} }) => {
   const { id, productName } = reservation;
   const dispatch = useDispatch();
   const { currentReservationTrack } = useSelector(state => state);
 
-  function initMap({
-    start_location: origin,
-    end_location: destination,
-    steps
-  }) {
+  function initMap({ start_location, end_location }, polyline) {
     const google = window.google || null;
     if (!google) {
       return console.log("Need to load google");
     }
 
+    const polylines = google.maps.geometry.encoding.decodePath(polyline.points);
     const directionsRenderer = new google.maps.DirectionsRenderer();
     const directionsService = new google.maps.DirectionsService();
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 11,
-      center: origin
+      center: start_location
     });
 
     directionsRenderer.setMap(map);
     directionsService.route(
       {
-        origin,
-        destination,
+        origin: start_location,
+        destination: end_location,
         travelMode: "DRIVING"
       },
       function(response, status) {
         if (status == "OK") {
-          directionsRenderer.setDirections(response);
-
+          const [firstPoly, ...rest] = polylines;
           const marker = new google.maps.Marker({
-            position: steps[0].end_location,
+            position: { lat: firstPoly.lat(), lng: firstPoly.lng() },
             icon: {
               url: "images/marker-F.gif",
               anchor: new google.maps.Point(30, 30)
             },
             map: map
           });
-
-          animateLocationMarker({ steps, marker, google });
+          directionsRenderer.setDirections(response);
+          animateMarkerLocation({ polylines, marker });
         } else {
           console.log("Directions request failed due to ", status);
         }
@@ -54,10 +52,8 @@ export default ({ reservation = {} }) => {
     );
   }
 
-  function animateLocationMarker({ steps, marker, google }) {
-    const delay = 100;
-
-    async function timeout() {
+  function animateMarkerLocation({ polylines, marker }) {
+    async function timeout(delay = TIMEOUT_DELAY) {
       return new Promise(resolve => {
         setTimeout(() => {
           return resolve();
@@ -65,38 +61,10 @@ export default ({ reservation = {} }) => {
       });
     }
 
-    async function animateStep(latLng) {
-      return timeout().then(() => {
-        marker.setPosition(latLng);
-      });
-    }
-
     (async () => {
-      for (let step of steps) {
-        await timeout().then(async () => {
-          // console.log({ step });
-          await timeout().then(async () => {
-            let n = 0;
-            let lat = step.start_location.lat;
-            let lng = step.start_location.lng;
-            const numberOfSteps = step.distance.value / 100;
-
-            const distanceLat =
-              (step.end_location.lat - step.start_location.lat) / numberOfSteps;
-            const distanceLng =
-              (step.end_location.lng - step.start_location.lng) / numberOfSteps;
-
-            while (n < numberOfSteps) {
-              // console.log({ n });
-              lat += distanceLat;
-              lng += distanceLng;
-              const latLng = new google.maps.LatLng(lat, lng);
-              // console.log({ distanceLat, distanceLng, lat, lng, latLng });
-
-              await animateStep(latLng);
-              n++;
-            }
-          });
+      for (let step of polylines) {
+        await timeout().then(() => {
+          marker.setPosition({ lat: step.lat(), lng: step.lng() });
         });
       }
     })();
@@ -111,7 +79,7 @@ export default ({ reservation = {} }) => {
   useEffect(() => {
     if (currentReservationTrack && currentReservationTrack.status === "OK") {
       const { routes } = currentReservationTrack;
-      initMap(routes[0].legs[0]);
+      initMap(routes[0].legs[0], routes[0].overview_polyline);
     }
   }, [currentReservationTrack]);
 
