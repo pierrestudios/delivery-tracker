@@ -2,10 +2,11 @@ import {
   LOADING_RESERVATIONS,
   LOAD_RESERVATIONS,
   ADD_RESERVATION,
-  CURRENT_RESERVATION
+  CURRENT_RESERVATION,
+  CURRENT_RESERVATION_TRACK
 } from "./types";
 import { loadProducts } from "./staticData";
-import { retrieve as retrieveFromDB, save as saveToDB } from "./apiActions";
+import { retrieve as retrieveFromApi, save as saveToApi } from "./apiActions";
 import { getDurationOptions } from "../../common/utils";
 
 function hydrate(data) {
@@ -45,7 +46,7 @@ export function loadReservations(forceReload = false) {
     const hydratedReservations =
       !forceReload && reservations
         ? reservations
-        : ((await retrieveFromDB("reservations", userToken)) || []).map(r => {
+        : ((await retrieveFromApi("reservations", userToken)) || []).map(r => {
             const product = products.find(p => p.id === r.productId);
             return hydrate({ ...r, productName: product.name });
           });
@@ -63,7 +64,7 @@ export function addReservation(data) {
       products,
       userAuth: { token: userToken }
     } = getState();
-    const savedReservation = await saveToDB("reservations", data, userToken);
+    const savedReservation = await saveToApi("reservations", data, userToken);
     const product = products.find(p => p.id === data.productId);
     const reservation = hydrate({
       ...savedReservation,
@@ -73,6 +74,24 @@ export function addReservation(data) {
     dispatch({
       type: ADD_RESERVATION,
       payload: reservation
+    });
+  };
+}
+
+export function trackReservation(reservationId) {
+  return async (dispatch, getState) => {
+    const {
+      userAuth: { token: userToken }
+    } = getState();
+
+    const tracking = await retrieveFromApi(
+      `delivery-tacking/${reservationId}`,
+      userToken
+    );
+
+    dispatch({
+      type: CURRENT_RESERVATION_TRACK,
+      payload: tracking
     });
   };
 }

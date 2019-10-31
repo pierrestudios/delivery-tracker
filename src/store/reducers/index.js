@@ -4,7 +4,10 @@ import categories from "./categories";
 import locations from "./locations";
 import products from "./products";
 import userAuth from "./userAuth";
-import reservations, { currentReservation } from "./reservations";
+import reservations, {
+  currentReservation,
+  currentReservationTrack
+} from "./reservations";
 
 export default combineReducers({
   categories,
@@ -12,5 +15,6 @@ export default combineReducers({
   products,
   userAuth,
   reservations,
-  currentReservation
+  currentReservation,
+  currentReservationTrack
 });

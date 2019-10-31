@@ -2,7 +2,8 @@ export { loadLocations, loadCategories, loadProducts } from "./staticData";
 export {
   loadReservations,
   addReservation,
-  saveCurrentReservation
+  saveCurrentReservation,
+  trackReservation
 } from "./reservations";
 export {
   apiSignup,
