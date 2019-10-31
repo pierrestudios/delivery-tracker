@@ -9,11 +9,13 @@ import ReservationsList from "../presentations/ReservationsList";
 import Loading from "../presentations/Loading";
 import Modal from "../presentations/Modal";
 import ReservationDetails from "../containers/ReservationDetails";
+import DeliveryTracker from "../containers/DeliveryTracker";
 
 export default () => {
   const { reservations, userAuth } = useSelector(state => state);
   const { token: userToken, loaded: authLoaded } = userAuth;
   const [selectedReservation, setSelectedReservation] = useState();
+  const [viewingDeliveryTracker, setViewingDeliveryTracker] = useState(false);
   const dispatch = useDispatch();
   const viewDetails = reservation => {
     setSelectedReservation(reservation);
@@ -40,12 +42,27 @@ export default () => {
     <Page id="reservations-page" className="container page-height">
       <Modal
         {...{
-          show: !!selectedReservation,
+          show: !viewingDeliveryTracker && !!selectedReservation,
           title: "Rental Details",
           bodyContent: !!selectedReservation ? (
-            <ReservationDetails reservation={selectedReservation} />
+            <ReservationDetails
+              reservation={selectedReservation}
+              viewDeliveryTracker={() => setViewingDeliveryTracker(true)}
+            />
           ) : null,
           handleClose: () => setSelectedReservation(null)
+        }}
+      />
+
+      <Modal
+        {...{
+          show: viewingDeliveryTracker && !!selectedReservation,
+          title: "Delivery Tracker",
+          bodyContent:
+            viewingDeliveryTracker && !!selectedReservation ? (
+              <DeliveryTracker reservation={selectedReservation} />
+            ) : null,
+          handleClose: () => setViewingDeliveryTracker(false)
         }}
       />
 

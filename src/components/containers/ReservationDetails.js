@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Grid, Badge, Avatar, GalleryCard } from "tabler-react";
+import { Card, Grid, Badge, Avatar, GalleryCard, Button } from "tabler-react";
 
 import {
   getPickupDate,
@@ -12,12 +12,12 @@ import {
 import { loadProducts, loadCategories } from "../../store/actions";
 import Loading from "../presentations/Loading";
 
-export default ({ reservation }) => {
+export default ({ reservation, viewDeliveryTracker }) => {
   const ANIMATION_TIME = 1000;
   const [animationReady, setAnimationReady] = useState(false);
   const [animationDone, setAnimationDone] = useState(false);
   const viewProductDetails = product => {
-    const category = categories.find(p => p.id === product.category);
+    // const category = categories.find(p => p.id === product.category);
   };
   const renderProductView = props => {
     const { name, details, image } = props;
@@ -104,10 +104,18 @@ export default ({ reservation }) => {
             const isPassedStatus =
               (currentStatus === status &&
                 (status === "confirmed" || animationDone)) ||
-              (currentStatus === "enRoute" && status === "confirmed") ||
-              currentStatus === "delivered";
+              ((currentStatus === "enRoute" || currentStatus === "delivered") &&
+                status === "confirmed") ||
+              (animationDone && currentStatus === "delivered");
             return renderTrackingRow(isPassedStatus, label);
           })}
+        </Grid.Row>
+        <Grid.Row className="pt-5 m-4 justify-content-center">
+          {animationDone && currentStatus === "enRoute" ? (
+            <Button color="success" onClick={viewDeliveryTracker}>
+              Track your delivery
+            </Button>
+          ) : null}
         </Grid.Row>
       </div>
     );

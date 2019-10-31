@@ -34,7 +34,6 @@ export default ({ viewDetails, reservation }) => {
         {viewDetails ? (
           <Button
             color="secondary"
-            className="btn-sm"
             onClick={() => viewDetails(reservation)}
             className=""
           >
