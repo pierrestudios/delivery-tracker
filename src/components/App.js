@@ -10,9 +10,10 @@ import Header from "./presentations/Header";
 
 import { loadUserData } from "../store/actions";
 import Footer from "./presentations/Footer";
+import CommingSoon from "./presentations/ComingSoon";
 
 export default () => {
-  const { userAuth } = useSelector(state => state);
+  const { userAuth } = useSelector((state) => state);
   const { token: loggedIn, loaded: authLoaded } = userAuth;
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ export default () => {
         <Switch>
           <Route
             path={"/login"}
-            render={routerProps => {
+            render={(routerProps) => {
               if (loggedIn) {
                 return <Redirect to={"/"} />;
               }
@@ -39,7 +40,7 @@ export default () => {
           />
           <Route
             path={"/signup"}
-            render={routerProps => {
+            render={(routerProps) => {
               if (loggedIn) {
                 return <Redirect to={"/"} />;
               }
@@ -49,7 +50,7 @@ export default () => {
           />
           <Route
             path={"/retrieve-password"}
-            render={routerProps => {
+            render={(routerProps) => {
               if (loggedIn) {
                 return <Redirect to={"/"} />;
               }
@@ -57,9 +58,11 @@ export default () => {
               return <PasswordRetrieve {...routerProps} />;
             }}
           />
+          <Route path="/privacy-policy" render={() => <CommingSoon />} />
+          <Route path="/terms" render={() => <CommingSoon />} />
           <Route
             path="*"
-            render={routerProps => {
+            render={(routerProps) => {
               return (
                 <React.Fragment>
                   <Header {...routerProps} isLoggedIn={loggedIn} />

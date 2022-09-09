@@ -14,10 +14,10 @@ export default () => {
           <div className="col-md-4">
             <ul className="list-inline quicklinks">
               <li className="list-inline-item">
-                <a href="#">Privacy Policy</a>
+                <a href="/privacy-policy">Privacy Policy</a>
               </li>
               <li className="list-inline-item">
-                <a href="#">Terms of Use</a>
+                <a href="/terms">Terms of Use</a>
               </li>
             </ul>
           </div>
