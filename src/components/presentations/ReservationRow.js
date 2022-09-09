@@ -1,12 +1,12 @@
 import React from "react";
-import { Card, Grid, Button } from "tabler-react";
+import { Grid, Button } from "tabler-react";
 
 export default ({ viewDetails, reservation }) => {
   const {
     deliveryDate,
     duration: durationString,
     productName,
-    reservationTotal
+    reservationTotal,
   } = reservation;
 
   return (

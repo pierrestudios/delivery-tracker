@@ -12,25 +12,20 @@ import {
   loadReservations,
   loadCategories,
   loadLocations,
-  loadProducts
+  loadProducts,
 } from "../../store/actions";
 import ProductDetails from "../containers/ProductDetails";
 import Loading from "../presentations/Loading";
 
 export default ({ match, history: { pathname } }) => {
   const { locationId, categoryId } = match.params;
-  const {
-    categories,
-    locations,
-    products,
-    reservations,
-    userAuth
-  } = useSelector(state => state);
+  const { categories, locations, products, reservations, userAuth } =
+    useSelector((state) => state);
   const { token: userToken, loaded: authLoaded } = userAuth;
   const [selectedLocationId, selectLocationId] = useState(locationId);
   const [selectedCategoryId, selectCategoryId] = useState(categoryId);
   const [selectedProduct, selectProduct] = useState();
-  const viewDetails = product => {
+  const viewDetails = (product) => {
     selectProduct(product);
   };
   const dispatch = useDispatch();
@@ -39,12 +34,14 @@ export default ({ match, history: { pathname } }) => {
     dispatch(loadCategories());
     dispatch(loadLocations());
     dispatch(loadProducts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories, locations, products]);
 
   useEffect(() => {
     if (authLoaded && !!userToken) {
       dispatch(loadReservations());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservations, authLoaded, userToken]);
 
   useEffect(() => {
@@ -52,7 +49,7 @@ export default ({ match, history: { pathname } }) => {
       window.scroll({
         top: 0,
         left: 0,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     } else {
       // fallback for older browsers
@@ -65,7 +62,7 @@ export default ({ match, history: { pathname } }) => {
   }
 
   const filteredProducts = products.filter(
-    p => selectedCategoryId === p.category
+    (p) => selectedCategoryId === p.category
   );
 
   return (
@@ -77,11 +74,11 @@ export default ({ match, history: { pathname } }) => {
           bodyContent: !!selectedProduct ? (
             <ProductDetails
               product={selectedProduct}
-              category={categories.find(c => c.id === selectedCategoryId)}
-              location={locations.find(l => l.id === selectedLocationId)}
+              category={categories.find((c) => c.id === selectedCategoryId)}
+              location={locations.find((l) => l.id === selectedLocationId)}
             />
           ) : null,
-          handleClose: () => selectProduct(null)
+          handleClose: () => selectProduct(null),
         }}
       />
 

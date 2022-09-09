@@ -11,7 +11,7 @@ import {
   formatDate,
   getDurationOptions,
   generateTimeOptions,
-  makeSingularOrPlural
+  makeSingularOrPlural,
 } from "../../common/utils";
 
 function updateOptionDuration(
@@ -32,7 +32,7 @@ function updateOptionDuration(
   console.log("updateOptionDuration", {
     newOption,
     optionIsChanged,
-    duration
+    duration,
   });
 
   if (optionIsChanged) {
@@ -50,14 +50,14 @@ export default ({
   isLoggedIn,
   currentReservation,
   updateCurrentReservation,
-  submitReservation
+  submitReservation,
 }) => {
   const {
     productId,
     deliverySource,
     deliveryAddress,
     selectedDuration,
-    selectedPriceOption
+    selectedPriceOption,
   } = currentReservation;
 
   // console.log({ currentReservation });
@@ -66,7 +66,7 @@ export default ({
     return <div />;
   }
 
-  const { heading, price: reservationPrice } = selectedPriceOption;
+  const { price: reservationPrice } = selectedPriceOption;
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
   const [errorFields, setErrorFields] = useState({});
@@ -94,9 +94,9 @@ export default ({
             name={icon}
             style={[
               {
-                color: "#007bff"
+                color: "#007bff",
               },
-              { ...(error ? { color: "red" } : null) }
+              { ...(error ? { color: "red" } : null) },
             ]}
           />
         ) : null}
@@ -125,7 +125,7 @@ export default ({
         return (
           <PlacesAutocomplete
             value={value || ""}
-            onChange={entry => {
+            onChange={(entry) => {
               update({ target: { value: entry } });
             }}
           >
@@ -140,7 +140,7 @@ export default ({
                 />
                 <div className="autocomplete-dropdown-container">
                   <ul className="list-group">
-                    {suggestions.map(suggestion => (
+                    {suggestions.map((suggestion) => (
                       <li
                         className="list-group-item pointer"
                         {...getSuggestionItemProps(suggestion)}
@@ -160,12 +160,12 @@ export default ({
           today,
           value,
           error,
-          handleChange: date => {
+          handleChange: (date) => {
             update({ target: { value: date } });
           },
           sixMoFromToday,
           placeHolderText: "Select date",
-          formatChosenDate: formatDate
+          formatChosenDate: formatDate,
         });
 
       case "time":
@@ -173,13 +173,13 @@ export default ({
           today,
           value,
           error,
-          handleChange: time => {
+          handleChange: (time) => {
             update({ target: { value: time } });
           },
           sixMoFromToday,
           mode: "time",
           placeHolderText: "Select time",
-          formatChosenDate: formatTime
+          formatChosenDate: formatTime,
         });
 
       case "duration":
@@ -190,7 +190,7 @@ export default ({
           label,
           error,
           update,
-          addlProps
+          addlProps,
         });
 
       default:
@@ -213,7 +213,7 @@ export default ({
     mode = "date",
     handleChange,
     sixMoFromToday,
-    placeHolderText
+    placeHolderText,
     // formatChosenDate
   }) => {
     return mode === "date" ? (
@@ -231,7 +231,7 @@ export default ({
         <Form.Select
           className={`min-w-200px ${error ? "error-input" : ""}`}
           defaultValue={value}
-          onChange={e => {
+          onChange={(e) => {
             handleChange(e.target.value);
           }}
         >
@@ -251,7 +251,7 @@ export default ({
     update,
     disabled,
     error,
-    addlProps
+    addlProps,
   }) => {
     const [durationCount, durationLabel] = value && value.split(" ");
     const durationLimit = 30;
@@ -263,7 +263,7 @@ export default ({
           {...{
             error,
             label,
-            disabled
+            disabled,
           }}
           className="mr-2"
         >
@@ -284,8 +284,8 @@ export default ({
 
             update({
               target: {
-                value: setDurationValue(durationLabel, durationValue)
-              }
+                value: setDurationValue(durationLabel, durationValue),
+              },
             });
           }}
         >
@@ -301,8 +301,8 @@ export default ({
 
             update({
               target: {
-                value: setDurationValue(durationLabel, durationValue)
-              }
+                value: setDurationValue(durationLabel, durationValue),
+              },
             });
           }}
         >
@@ -311,7 +311,7 @@ export default ({
       </div>
     );
   };
-  const validate = values => {
+  const validate = (values) => {
     const errors = {};
     errors.duration = !values.duration
       ? "Duration option is required"
@@ -331,8 +331,8 @@ export default ({
 
     return errors;
   };
-  const hasErrors = errors => {
-    const errorsArr = Object.keys(errors).filter(e => !!errors[e]);
+  const hasErrors = (errors) => {
+    const errorsArr = Object.keys(errors).filter((e) => !!errors[e]);
     return errorsArr && !!errorsArr.length;
   };
   const saveReservation = () => {
@@ -340,7 +340,7 @@ export default ({
       duration: selectedDuration,
       deliveryDate,
       deliveryTime,
-      deliveryAddress
+      deliveryAddress,
     });
 
     if (hasErrors(errors)) {
@@ -357,14 +357,15 @@ export default ({
       deliveryAddress,
       deliverySource,
       reservationPrice,
-      productId: productId
+      productId: productId,
     });
   };
 
   useEffect(() => {
-    updateOptionDuration(selectedPriceOption, selectedDuration, value =>
+    updateOptionDuration(selectedPriceOption, selectedDuration, (value) =>
       updateCurrentReservation({ selectedDuration: value })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPriceOption]);
 
   return (
@@ -374,11 +375,11 @@ export default ({
         value: selectedDuration,
         type: "duration",
         disabled: true,
-        update: e => {
+        update: (e) => {
           updateCurrentReservation({ selectedDuration: e.target.value });
           e.target.value &&
             setErrorFields({ ...errorFields, selectedDuration: "" });
-        }
+        },
       })}
 
       {renderField({
@@ -386,11 +387,11 @@ export default ({
         value: deliveryDate,
         type: "date",
         error: errorFields.deliveryDate,
-        update: e => {
+        update: (e) => {
           setDeliveryDate(e.target.value);
           e.target.value &&
             setErrorFields({ ...errorFields, deliveryDate: "" });
-        }
+        },
       })}
 
       {renderField({
@@ -398,11 +399,11 @@ export default ({
         value: deliveryTime,
         type: "time",
         error: errorFields.deliveryTime,
-        update: e => {
+        update: (e) => {
           setDeliveryTime(e.target.value);
           e.target.value &&
             setErrorFields({ ...errorFields, deliveryTime: "" });
-        }
+        },
       })}
 
       {renderField({
@@ -410,11 +411,11 @@ export default ({
         value: deliveryAddress,
         type: "addressAutoComplete",
         error: errorFields.deliveryAddress,
-        update: e => {
+        update: (e) => {
           updateCurrentReservation({ deliveryAddress: e.target.value });
           e.target.value &&
             setErrorFields({ ...errorFields, deliveryAddress: "" });
-        }
+        },
       })}
 
       {isLoggedIn ? (

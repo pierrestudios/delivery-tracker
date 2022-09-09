@@ -9,11 +9,11 @@ import LogoHeader from "../presentations/LogoHeader";
 
 export default () => {
   const dispatch = useDispatch();
-  const { userAuth } = useSelector(state => state);
+  const { userAuth } = useSelector((state) => state);
   const {
     passwordRetrievedError,
     passwordRetrievedMessage,
-    loaded: authLoaded = false
+    loaded: authLoaded = false,
   } = userAuth;
   const [loginData, saveLoginData] = useState({ started: true });
   const { email, message, error } = loginData;
@@ -23,23 +23,24 @@ export default () => {
       saveLoginData({
         ...loginData,
         error: passwordRetrievedError,
-        started: authLoaded
+        started: authLoaded,
       });
     } else if (passwordRetrievedMessage) {
       saveLoginData({
         ...loginData,
         message: passwordRetrievedMessage,
-        started: authLoaded
+        started: authLoaded,
       });
     } else if (authLoaded) {
       saveLoginData({ ...loginData, started: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoaded, passwordRetrievedError, passwordRetrievedMessage]);
 
   function sendPasswordRetrieve() {
     saveLoginData({
       ...loginData,
-      started: false
+      started: false,
     });
     dispatch(apiRetrievePassword(loginData));
   }
@@ -55,7 +56,7 @@ export default () => {
           <div
             className="h-7 m-7 text-center"
             style={{
-              fontSize: 18
+              fontSize: 18,
             }}
           >
             Password Retrieve
@@ -75,11 +76,11 @@ export default () => {
                     position="append"
                     placeholder="Email"
                     value={email}
-                    onChange={e => {
+                    onChange={(e) => {
                       saveLoginData({
                         ...loginData,
                         email: e.target.value,
-                        error: ""
+                        error: "",
                       });
                     }}
                   />

@@ -12,12 +12,12 @@ import ReservationDetails from "../containers/ReservationDetails";
 import DeliveryTracker from "../containers/DeliveryTracker";
 
 export default () => {
-  const { reservations, userAuth } = useSelector(state => state);
+  const { reservations, userAuth } = useSelector((state) => state);
   const { token: userToken, loaded: authLoaded } = userAuth;
   const [selectedReservation, setSelectedReservation] = useState();
   const [viewingDeliveryTracker, setViewingDeliveryTracker] = useState(false);
   const dispatch = useDispatch();
-  const viewDetails = reservation => {
+  const viewDetails = (reservation) => {
     setSelectedReservation(reservation);
   };
   const reLoadData = () => {
@@ -28,6 +28,7 @@ export default () => {
     if (authLoaded && !!userToken) {
       dispatch(loadReservations());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservations, authLoaded, userToken]);
 
   if (authLoaded && !userToken) {
@@ -50,7 +51,7 @@ export default () => {
               viewDeliveryTracker={() => setViewingDeliveryTracker(true)}
             />
           ) : null,
-          handleClose: () => setSelectedReservation(null)
+          handleClose: () => setSelectedReservation(null),
         }}
       />
 
@@ -62,7 +63,7 @@ export default () => {
             viewingDeliveryTracker && !!selectedReservation ? (
               <DeliveryTracker reservation={selectedReservation} />
             ) : null,
-          handleClose: () => setViewingDeliveryTracker(false)
+          handleClose: () => setViewingDeliveryTracker(false),
         }}
       />
 

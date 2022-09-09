@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card } from "tabler-react";
 
@@ -9,7 +9,7 @@ const TIMEOUT_DELAY = 500;
 export default ({ reservation = {} }) => {
   const { id, productName } = reservation;
   const dispatch = useDispatch();
-  const { currentReservationTrack } = useSelector(state => state);
+  const { currentReservationTrack } = useSelector((state) => state);
 
   function initMap({ start_location, end_location }, polyline) {
     const google = window.google || null;
@@ -22,7 +22,7 @@ export default ({ reservation = {} }) => {
     const directionsService = new google.maps.DirectionsService();
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 11,
-      center: start_location
+      center: start_location,
     });
 
     directionsRenderer.setMap(map);
@@ -30,18 +30,18 @@ export default ({ reservation = {} }) => {
       {
         origin: start_location,
         destination: end_location,
-        travelMode: "DRIVING"
+        travelMode: "DRIVING",
       },
-      function(response, status) {
-        if (status == "OK") {
-          const [firstPoly, ...rest] = polylines;
+      function (response, status) {
+        if (status === "OK") {
+          const [firstPoly] = polylines;
           const marker = new google.maps.Marker({
             position: { lat: firstPoly.lat(), lng: firstPoly.lng() },
             icon: {
               url: "images/marker-F.gif",
-              anchor: new google.maps.Point(30, 30)
+              anchor: new google.maps.Point(30, 30),
             },
-            map: map
+            map: map,
           });
           directionsRenderer.setDirections(response);
           animateMarkerLocation({ polylines, marker });
@@ -54,7 +54,7 @@ export default ({ reservation = {} }) => {
 
   function animateMarkerLocation({ polylines, marker }) {
     async function timeout(delay = TIMEOUT_DELAY) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         setTimeout(() => {
           return resolve();
         }, delay);
@@ -74,6 +74,7 @@ export default ({ reservation = {} }) => {
     (async () => {
       dispatch(trackReservation(id));
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -81,6 +82,7 @@ export default ({ reservation = {} }) => {
       const { routes } = currentReservationTrack;
       initMap(routes[0].legs[0], routes[0].overview_polyline);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentReservationTrack]);
 
   return (
@@ -94,7 +96,7 @@ export default ({ reservation = {} }) => {
         <div
           id="map"
           style={{
-            height: 500
+            height: 500,
           }}
         >
           Loading Map...

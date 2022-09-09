@@ -10,30 +10,28 @@ import { formatPhone, getFirstAndLastName } from "../../common/utils";
 
 export default () => {
   const dispatch = useDispatch();
-  const { userAuth } = useSelector(state => state);
+  const { userAuth } = useSelector((state) => state);
   const {
     name,
     isSaving,
     userDataError,
     userDataSaved = false,
     token: userToken,
-    loaded: authLoaded = false
+    loaded: authLoaded = false,
   } = userAuth;
   const [userData, setUserData] = useState({
     ...userAuth,
     userDataSaved,
-    started: true
+    started: true,
   });
-  const {
-    firstName: savedFirstName,
-    lastName: savedLastName
-  } = getFirstAndLastName(name);
+  const { firstName: savedFirstName, lastName: savedLastName } =
+    getFirstAndLastName(name);
   const {
     firstName = savedFirstName,
     lastName = savedLastName,
     email,
     phone,
-    error
+    error,
   } = userData;
 
   useEffect(() => {
@@ -42,13 +40,14 @@ export default () => {
         ...userAuth,
         ...userData,
         error: userDataError,
-        started: authLoaded
+        started: authLoaded,
       });
     } else if (!authLoaded) {
       startProfileApp();
     } else {
       setUserData({ ...userAuth, ...userData, userDataSaved, error: "" });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoaded, userDataError, userDataSaved, isSaving]);
 
   function startProfileApp() {
@@ -58,10 +57,8 @@ export default () => {
   }
 
   function saveData() {
-    const {
-      firstName: savedFirstName,
-      lastName: savedLastName
-    } = getFirstAndLastName(userData.name);
+    const { firstName: savedFirstName, lastName: savedLastName } =
+      getFirstAndLastName(userData.name);
     const { firstName = savedFirstName, lastName = savedLastName } = userData;
 
     dispatch(saveUserData({ ...userData, name: `${firstName} ${lastName}` }));
@@ -78,7 +75,7 @@ export default () => {
           <div
             className="h-7 m-7 text-center"
             style={{
-              fontSize: 18
+              fontSize: 18,
             }}
           >
             Update My Profile
@@ -103,11 +100,11 @@ export default () => {
                 name="firstName"
                 placeholder="First Name"
                 value={firstName}
-                onChange={e => {
+                onChange={(e) => {
                   setUserData({
                     ...userData,
                     firstName: e.target.value,
-                    error: ""
+                    error: "",
                   });
                 }}
               />
@@ -119,11 +116,11 @@ export default () => {
                 name="lastName"
                 placeholder="Last Name"
                 value={lastName}
-                onChange={e => {
+                onChange={(e) => {
                   setUserData({
                     ...userData,
                     lastName: e.target.value,
-                    error: ""
+                    error: "",
                   });
                 }}
               />
@@ -135,11 +132,11 @@ export default () => {
                 name="phone"
                 placeholder="Phone"
                 value={phone}
-                onChange={e => {
+                onChange={(e) => {
                   setUserData({
                     ...userData,
                     phone: formatPhone(e.target.value),
-                    error: ""
+                    error: "",
                   });
                 }}
               />

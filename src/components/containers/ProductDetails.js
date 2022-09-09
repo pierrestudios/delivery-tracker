@@ -12,14 +12,14 @@ export default ({ product, category, location }) => {
   const { name: categoryName } = category;
   const { desc, meta, pricingTable } = details && details[0];
   const { reservations, currentReservation, userAuth } = useSelector(
-    state => state
+    (state) => state
   );
   const { token: userToken, loaded: authLoaded } = userAuth;
   const isLoggedIn = authLoaded && !!userToken;
   const { selectedPriceOption } = currentReservation;
   const { selectedDuration } = currentReservation;
   const dispatch = useDispatch();
-  const updateCurrentReservation = data => {
+  const updateCurrentReservation = (data) => {
     dispatch(saveCurrentReservation(data));
   };
   const resetCurrentReservation = () => {
@@ -28,19 +28,20 @@ export default ({ product, category, location }) => {
         deliverySource: (location && location.address) || "",
         productId: product.id,
         selectedPriceOption: undefined,
-        selectedDuration: undefined
+        selectedDuration: undefined,
       })
     );
   };
-  const submitReservation = data => {
+  const submitReservation = (data) => {
     dispatch(addReservation(data));
   };
   const reservation =
-    reservations && reservations.find(r => r.productId === product.id);
+    reservations && reservations.find((r) => r.productId === product.id);
   const descText = desc && desc.replace(/,/gi, " • ");
 
   useEffect(() => {
     resetCurrentReservation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   return (
@@ -64,8 +65,9 @@ export default ({ product, category, location }) => {
                 maxWidth: 200,
                 width: "100%",
                 margin: "auto",
-                flex: 1
+                flex: 1,
               }}
+              alt=""
             />
           </Card.Body>
           <Card.Body>
@@ -84,10 +86,10 @@ export default ({ product, category, location }) => {
         <PricingTable
           data={pricingTable}
           selectedPriceOption={selectedPriceOption}
-          selectPriceOption={selectedPriceOption =>
+          selectPriceOption={(selectedPriceOption) =>
             updateCurrentReservation({
               selectedPriceOption,
-              selectedDuration: selectedPriceOption.heading
+              selectedDuration: selectedPriceOption.heading,
             })
           }
           reservation={reservation}
@@ -100,7 +102,7 @@ export default ({ product, category, location }) => {
             currentReservation={currentReservation}
             submitReservation={submitReservation}
             updateCurrentReservation={updateCurrentReservation}
-            updateDuration={value => {
+            updateDuration={(value) => {
               updateCurrentReservation({ selectedDuration: value });
             }}
           />

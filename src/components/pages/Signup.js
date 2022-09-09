@@ -10,11 +10,11 @@ import LogoHeader from "../presentations/LogoHeader";
 
 export default () => {
   const dispatch = useDispatch();
-  const { userAuth } = useSelector(state => state);
+  const { userAuth } = useSelector((state) => state);
   const {
     token: userToken,
     signupError,
-    loaded: authLoaded = false
+    loaded: authLoaded = false,
   } = userAuth;
   const [signupData, saveSignupData] = useState({ started: false });
   const { email, password, passwordConfirm, error } = signupData;
@@ -24,15 +24,17 @@ export default () => {
       saveSignupData({
         ...signupData,
         error: signupError,
-        started: true
+        started: true,
       });
     } else if (authLoaded && !userToken) {
       saveSignupData({ ...signupData, started: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoaded, signupError]);
 
   useEffect(() => {
     userToken ? startAppWithAuth() : !authLoaded && startSignupApp();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken]);
 
   function startSignupApp() {
@@ -51,7 +53,7 @@ export default () => {
     if (!signupData) {
       return saveSignupData({
         ...signupData,
-        error: "Please enter all account information"
+        error: "Please enter all account information",
       });
     }
 
@@ -59,7 +61,7 @@ export default () => {
     if (!signupData.email || !signupData.password) {
       return saveSignupData({
         ...signupData,
-        error: "Please enter account email and password"
+        error: "Please enter account email and password",
       });
     }
 
@@ -67,7 +69,7 @@ export default () => {
     if (!isValidEmail(signupData.email)) {
       return saveSignupData({
         ...signupData,
-        error: "Please enter a valid email"
+        error: "Please enter a valid email",
       });
     }
 
@@ -78,7 +80,7 @@ export default () => {
     ) {
       return saveSignupData({
         ...signupData,
-        error: "Password confirmation doesn't match password"
+        error: "Password confirmation doesn't match password",
       });
     }
 
@@ -98,7 +100,7 @@ export default () => {
           <div
             className="h-7 m-7 text-center"
             style={{
-              fontSize: 18
+              fontSize: 18,
             }}
           >
             Create An Account
@@ -115,11 +117,11 @@ export default () => {
                 position="append"
                 placeholder="Email"
                 value={email}
-                onChange={e => {
+                onChange={(e) => {
                   saveSignupData({
                     ...signupData,
                     email: e.target.value,
-                    error: ""
+                    error: "",
                   });
                 }}
               />
@@ -133,11 +135,11 @@ export default () => {
                 position="append"
                 placeholder="Password"
                 defaultValue={password}
-                onChange={e => {
+                onChange={(e) => {
                   saveSignupData({
                     ...signupData,
                     password: e.target.value,
-                    error: ""
+                    error: "",
                   });
                 }}
               />
@@ -151,11 +153,11 @@ export default () => {
                 position="append"
                 placeholder="Password"
                 defaultValue={password}
-                onChange={e => {
+                onChange={(e) => {
                   saveSignupData({
                     ...signupData,
                     passwordConfirm: e.target.value,
-                    error: ""
+                    error: "",
                   });
                 }}
               />

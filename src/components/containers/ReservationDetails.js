@@ -7,7 +7,7 @@ import {
   getDurationOptions,
   getStatusBadgeColor,
   getStatusBadgeLabel,
-  reservationTrackingSteps
+  reservationTrackingSteps,
 } from "../../common/utils";
 import { loadProducts, loadCategories } from "../../store/actions";
 import Loading from "../presentations/Loading";
@@ -16,10 +16,10 @@ export default ({ reservation, viewDeliveryTracker }) => {
   const ANIMATION_TIME = 1000;
   const [animationReady, setAnimationReady] = useState(false);
   const [animationDone, setAnimationDone] = useState(false);
-  const viewProductDetails = product => {
+  const viewProductDetails = (product) => {
     // const category = categories.find(p => p.id === product.category);
   };
-  const renderProductView = props => {
+  const renderProductView = (props) => {
     const { name, details, image } = props;
     const { desc } = (details && details[0]) || {};
     const descParagraphs = desc && desc.split("\n");
@@ -34,14 +34,14 @@ export default ({ reservation, viewDeliveryTracker }) => {
           />
         </div>
         <div>
-          {descParagraphs.map(descText => {
+          {descParagraphs.map((descText) => {
             const [label, value] = descText
               .replace(/,/gi, "")
               .trim()
               .split(":");
 
             if (!label) {
-              return;
+              return "";
             }
 
             return (
@@ -67,7 +67,7 @@ export default ({ reservation, viewDeliveryTracker }) => {
       </Grid.Row>
     );
   };
-  const getStatusBadge = status => {
+  const getStatusBadge = (status) => {
     return (
       <Badge color={getStatusBadgeColor(status)} className="mt-3 p-2">
         <span>{getStatusBadgeLabel(status)}</span>
@@ -88,7 +88,7 @@ export default ({ reservation, viewDeliveryTracker }) => {
       </Grid.Col>
     );
   };
-  const getTrackingAndStatus = currentStatus => {
+  const getTrackingAndStatus = (currentStatus) => {
     return (
       <div className="position-relative tracking-steps">
         <span className="d-block position-absolute track"></span>
@@ -120,7 +120,7 @@ export default ({ reservation, viewDeliveryTracker }) => {
       </div>
     );
   };
-  const { categories, products } = useSelector(state => state);
+  const { categories, products } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -147,10 +147,10 @@ export default ({ reservation, viewDeliveryTracker }) => {
     duration: durationString,
     productName,
     productId,
-    status = "new"
+    status = "new",
   } = reservation;
-  const product = products.find(p => p.id === productId);
-  const category = categories.find(p => p.id === product.category);
+  const product = products.find((p) => p.id === productId);
+  const category = categories.find((p) => p.id === product.category);
   const { durationCount } = getDurationOptions(durationString);
   const pickupDate = getPickupDate(deliveryDate, durationCount);
   const pickupTime = deliveryTime;
@@ -174,7 +174,7 @@ export default ({ reservation, viewDeliveryTracker }) => {
       <Card.Body className="pt-1 pb-1">
         {renderProductView({
           ...product,
-          viewDetails: viewProductDetails
+          viewDetails: viewProductDetails,
         })}
         <div className="mt-2">
           {status === "new" ? (
