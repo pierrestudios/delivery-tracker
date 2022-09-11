@@ -16,15 +16,15 @@ export default () => {
         "Air Chipping Hammer",
         "1″ Air Paving Breaker",
         "1 1/4″ Air Paving Breaker",
-        "1 1/8″ Air Paving Breaker"
+        "1 1/8″ Air Paving Breaker",
       ],
       category: {
         name: "Air Compressors & Air Tools",
-        id: "5d101db988b1998f4b5a9858"
+        id: "5d101db988b1998f4b5a9858",
       },
       image:
         "https://delivery-tracker.s3.amazonaws.com/products/Product-5d111bcd10109ba08758f3b0/product-image-1563237341452.jpg",
-      id: "5d111bcd10109ba08758f3b0"
+      id: "5d111bcd10109ba08758f3b0",
     },
     {
       name: "2″ Trash Pump Gasoline",
@@ -33,15 +33,15 @@ export default () => {
         "3″ Trash Pump Gasoline",
         "3″ Diaphragm Pump Gasoline",
         "4″ Trash Pump Gasoline",
-        "2″ x 20″ Suction Hose"
+        "2″ x 20″ Suction Hose",
       ],
       category: {
         name: "Pumps & Accessories",
-        id: "5d101db988b1998f4b5a9861"
+        id: "5d101db988b1998f4b5a9861",
       },
       image:
         "https://delivery-tracker.s3.amazonaws.com/products/Product-5d111e7010109ba08758f6e4/product-image-1563237833013.jpg",
-      id: "5d111e7010109ba08758f6e4"
+      id: "5d111e7010109ba08758f6e4",
     },
     {
       name: "6′ x 2 1/2′ Narrow Scaffold Set",
@@ -50,16 +50,16 @@ export default () => {
         "6′ x 5′ Scaffold Set",
         "24′ Extension Ladder",
         "28′ Extension Ladder",
-        "32′ Extension Ladder"
+        "32′ Extension Ladder",
       ],
       category: {
         name: "Scaffolding & Ladders",
-        id: "5d101db988b1998f4b5a9863"
+        id: "5d101db988b1998f4b5a9863",
       },
       image:
         "https://delivery-tracker.s3.amazonaws.com/products/Product-5d111ec710109ba08758f73c/product-image-1563237894271.jpg",
-      id: "5d111ec710109ba08758f73c"
-    }
+      id: "5d111ec710109ba08758f73c",
+    },
   ];
   return (
     <Page>
@@ -97,7 +97,6 @@ export default () => {
                 otherProductsNames,
                 category: { name: categoryName, id: categoryId },
                 image,
-                id
               }) => (
                 <div className="col-md-4" key={categoryId}>
                   <h4 className="service-heading">{categoryName}</h4>

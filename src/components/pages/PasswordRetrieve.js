@@ -16,7 +16,7 @@ export default () => {
     loaded: authLoaded = false,
   } = userAuth;
   const [loginData, saveLoginData] = useState({ started: true });
-  const { email, message, error } = loginData;
+  const { email = "", message = "", error } = loginData;
 
   useEffect(() => {
     if (passwordRetrievedError) {
@@ -61,7 +61,6 @@ export default () => {
           >
             Password Retrieve
           </div>
-
           <Form>
             {error ? <span className="text-danger">{error}</span> : null}
             {message ? (
@@ -85,7 +84,6 @@ export default () => {
                     }}
                   />
                 </div>
-
                 <Button
                   color="info"
                   type="button"
@@ -99,11 +97,9 @@ export default () => {
             )}
           </Form>
         </Card.Body>
-
         <Card.Body className="text-center">
           <span>Or </span>
         </Card.Body>
-
         <Card.Body className="text-center">
           <Link className="btn btn mt-3 " to="/login">
             <span>Sign In to your Account</span>

@@ -29,8 +29,8 @@ export default () => {
   const {
     firstName = savedFirstName,
     lastName = savedLastName,
-    email,
-    phone,
+    email = "",
+    phone = "",
     error,
   } = userData;
 

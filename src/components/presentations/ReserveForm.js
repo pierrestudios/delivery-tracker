@@ -142,6 +142,7 @@ export default ({
                   <ul className="list-group">
                     {suggestions.map((suggestion) => (
                       <li
+                        key={suggestion.id}
                         className="list-group-item pointer"
                         {...getSuggestionItemProps(suggestion)}
                       >
